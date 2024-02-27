@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>admin dashboard</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+
+    <style>
+        /* Table styles */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+        }
+    </style>
+
+    <!-- new boxes -->
+    <style>
+        body {
+            margin-top: 0px;
+            background-color: #f7f7ff;
+        }
+
+        .radius-10 {
+            border-radius: 10px !important;
+        }
+
+        .border-info {
+            border-left: 5px solid #0dcaf0 !important;
+        }
+
+        .border-danger {
+            border-left: 5px solid #fd3550 !important;
+        }
+
+        .border-success {
+            border-left: 5px solid #15ca20 !important;
+        }
+
+        .border-warning {
+            border-left: 5px solid #ffc107 !important;
+        }
+
+
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 0px solid rgba(0, 0, 0, 0);
+            border-radius: .25rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+        }
+
+        .bg-gradient-scooter {
+            background: #17ead9;
+            background: -webkit-linear-gradient(45deg, #17ead9, #6078ea) !important;
+            background: linear-gradient(45deg, #17ead9, #6078ea) !important;
+        }
+
+        .widgets-icons-2 {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ededed;
+            font-size: 27px;
+            border-radius: 10px;
+        }
+
+        .rounded-circle {
+            border-radius: 50% !important;
+        }
+
+        .text-white {
+            color: #fff !important;
+        }
+
+        .ms-auto {
+            margin-left: auto !important;
+        }
+
+        .bg-gradient-bloody {
+            background: #f54ea2;
+            background: -webkit-linear-gradient(45deg, #f54ea2, #ff7676) !important;
+            background: linear-gradient(45deg, #f54ea2, #ff7676) !important;
+        }
+
+        .bg-gradient-ohhappiness {
+            background: #00b09b;
+            background: -webkit-linear-gradient(45deg, #00b09b, #96c93d) !important;
+            background: linear-gradient(45deg, #00b09b, #96c93d) !important;
+        }
+
+        .bg-gradient-blooker {
+            background: #ffdf40;
+            background: -webkit-linear-gradient(45deg, #ffdf40, #ff8359) !important;
+            background: linear-gradient(45deg, #ffdf40, #ff8359) !important;
+        }
+    </style>
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Mukta:wght@800&family=Noto+Sans&family=Nunito:ital,wght@0,300;0,600;1,200&family=Ruwudu&display=swap"
+        rel="stylesheet">
+
+
+
+</head>
+
+<body>
+    <header>
+        <!-- place navbar here -->
+        <%- include('../layouts/adminHeader.ejs') %>
+    </header>
+
+
+
+
+
+
+
+
+    <div id="bodyContent" style="margin-left: 10%;">
+
+        <h1 class="text-bg-info rounded" style="font-size: 30px; width: 20rem;height: 3rem; text-align: center;  font-family: 'Alegreya Sans SC', sans-serif;
+                font-family: 'Roboto Condensed', sans-serif; margin-top: 2rem;margin-bottom: 2rem;">
+            Admin dashboard</h1>
+        <div style="margin-bottom: 2rem;">
+            <h4>Welcome <%= admin.name %>
+            </h4>
+
+            <table>
+                <tr>
+                    <td>Name:</td>
+                    <td>
+                        <%= admin.name %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td>
+                        <%= admin.email %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Mobile:</td>
+                    <td>
+                        <%= admin.mobile %>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <p style="display: inline-block;">click here to view sales report:</p>
+        <a style="display: inline-block; text-decoration: none; font-size: 18px;" href="/admin/salesReport">sales
+            report</a>
+
+
+        <div class="container" style="margin-left: 0rem;">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+                <div class="col">
+                    <div class="card radius-10 border-start border-0 border-3 border-info">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <p class="mb-0 text-secondary">Total Orders</p>
+                                    <h4 class="my-1 text-info">
+                                        <%= totalOrders %>
+                                    </h4>
+                                    <!-- <p class="mb-0 font-13">+2.5% from last week</p> -->
+                                    <p class="mb-0 font-13">Download Order report:
+                                        <a href="/admin//export-orders" class="btn btn-success btn-sm">
+                                            🈯excel
+                                        </a>
+                                        <a href="/admin//export-orders-to-pdf" class="btn btn-danger btn-sm">
+                                            pdf
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card radius-10 border-start border-0 border-3 border-warning">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <p class="mb-0 text-secondary">Total Customers</p>
+                                    <h4 class="my-1 text-warning">
+                                        <%= totalUsers %>
+                                    </h4>
+                                    <!-- <p class="mb-0 font-13">download user report: <a
+                                            href="/admin/export-users">excel</a>
+                                    </p> -->
+                                    <p class="mb-0 font-13">Download user report:
+                                        <a href="/admin/export-users" class="btn btn-success btn-sm">
+                                            🈯excel
+                                        </a>
+                                        <a href="/admin/export-users-pdf" class="btn btn-danger btn-sm">
+                                            pdf
+                                        </a>
+                                    </p>
+
+                                </div>
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-blooker text-white ms-auto">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- weekly sales report -->
+                <div class="col">
+                    <div class="card radius-10 border-start border-0 border-3 border-danger">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <p class="mb-0 text-secondary" style="font-weight: 400;">Weekly Sales
+                                        Report
+                                    </p>
+
+                                    <p style="display: inline-block">total sales report:<b
+                                            style="color: palevioletred;">
+                                            Rs.<%=weeklySalesData.totalSales%>
+                                        </b></p>
+                                    <p class="mb-0 font-13">
+                                        number of transactions:<b>
+                                            <%=weeklySalesData.numberOfTransactions%>
+                                        </b>
+                                    </p>
+                                </div>
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto">
+                                    <i class="fa fa-dollar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- yearly sales report -->
+                <div class="col">
+                    <div class="card radius-10 border-start border-0 border-3 border-danger">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <p class="mb-0 text-secondary" style="font-weight: 400;">Yearly Sales
+                                        Report
+                                    </p>
+
+                                    <p style="display: inline-block">total sales report:<b
+                                            style="color: palevioletred;">
+                                            Rs.<%=yearlySalesData.totalSales%>
+                                        </b></p>
+                                    <!-- <h4 class="my-1 text-danger" style="display: inline-block">Rs.
+                        <%=dailySalesData.totalSales%>
+                    </h4> -->
+                                    <p class="mb-0 font-13">
+                                        number of transactions:<b>
+                                            <%=yearlySalesData.numberOfTransactions%>
+                                        </b>
+                                    </p>
+                                </div>
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto">
+                                    <i class="fa fa-dollar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <footer class="bg-body-tertiary text-center text-lg-start" style="width: 100%; margin-top: 3rem;">
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+            © 2020 Copyright:
+            <a class="text-body" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+
+
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+
+    <script>
+        // JavaScript to toggle the sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const iconCollapse = document.getElementById('sidebar-icon-collapse');
+            const iconExpand = document.getElementById('sidebar-icon-expand');
+
+            sidebar.classList.toggle('collapsed');
+            iconCollapse.classList.toggle('icon-collapse');
+            iconExpand.classList.toggle('icon-expand');
+        }
+    </script>
+</body>
+
+</html>

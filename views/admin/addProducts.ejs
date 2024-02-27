@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>add products</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+    <!-- Cropper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <!-- Include Cropper.js CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+
+    <style>
+        #imagePreviews {
+            display: flex;
+            /* Use flexbox */
+            flex-wrap: nowrap;
+            /* Prevent wrapping to next line */
+            overflow-x: auto;
+            /* Enable horizontal scrolling */
+            max-width: 100%;
+            /* Adjust as needed */
+            margin-bottom: 10px;
+            /* Adjust spacing */
+            background-color: rgb(237, 234, 234);
+        }
+
+        #imagePreviews>div {
+            margin-right: 10px;
+            /* Adjust spacing between images */
+        }
+
+        #imagePreviews>div:last-child {
+            margin-right: 0;
+            /* Remove margin for last child */
+        }
+
+        #imagePreviews img {
+            max-width: 150px;
+            /* Adjust max-width as needed */
+            max-height: 150px;
+            /* Adjust max-height as needed */
+            margin-right: 10px;
+            /* Add gap between images */
+
+        }
+    </style>
+
+
+
+</head>
+
+<body>
+    <header>
+        <!-- place navbar here -->
+        <%- include('../layouts/adminHeader.ejs') %>
+    </header>
+    <main>
+        <% if (messages.error) { %>
+            <div class="alert alert-danger">
+                <%= messages.error %>
+                    <button type="button" class="close" aria-label="Close" onclick="closeFlashMessage()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <% } else if (messages.success) { %>
+                <div class="alert alert-success">
+                    <%= messages.success %>
+                        <button type="button" class="close" aria-label="Close" onclick="closeFlashMessage()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <% } %>
+
+                    <div class="container form-box mt-5">
+                        <div class="row d-flex justify-content-end">
+                            <div class="col-md-10 col-lg-12 col-xl-12">
+
+                                <form id="ProductForm" name="ProductForm" method="post" action="/admin/products/add"
+                                    enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="name">Name</label>
+                                                <input type="text" class="form-control" id="name" name="name" />
+                                                <div id="nameWarning" class="text-danger"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="price">Price</label>
+                                                <input type="number" class="form-control" id="price" name="price"
+                                                    min="0" />
+                                                <div id="priceWarning" class="text-danger"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="category">Category</label>
+                                                <select class="select form-control" id="category" name="category">
+                                                    <option value="">Select</option>
+                                                    <% category.forEach(categoryes=> { %>
+                                                        <option value="<%= categoryes.category %>">
+                                                            <%= categoryes.category %>
+                                                        </option>
+                                                        <% }); %>
+                                                </select>
+                                                <div id="categoryWarning" class="text-danger"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="subCategory">Sub Category</label>
+                                                <select class="select form-control" id="subCategory" name="subCategory">
+                                                    <option value="">Select</option>
+                                                    <% category.forEach(categoryes=> { %>
+                                                        <option value="<%= categoryes.sub_Category %>">
+                                                            <%= categoryes.sub_Category %>
+                                                        </option>
+                                                        <% }); %>
+                                                </select>
+                                                <div id="subCategoryWarning" class="text-danger"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <!-- <label for="brand">Brand</label>
+                                    <select class="select form-control" id="brand" name="brand">
+                                        <option value="">Select</option>
+                                        <option value="Apple">Apple</option>
+                                        <option value="Samsung">Samsung</option>
+                                        <option value="Oppo">Oppo</option>
+                                        <option value="Asus">Asus</option>
+                                        <option value="Dell">Dell</option>
+                                        <option value="Hp">Hp</option>
+                                        <option value="Zebronics">Zebronics</option>
+                                        <option value="fire-Boltt ">fire-Boltt </option>
+                                        <option value="Boat">Boat</option>
+                                        <option value="Fasttrack">Fasttrack</option>
+
+                                    </select>
+                                    <div id="brandWarning" class="text-danger"></div> -->
+                                                <label for="brand">Brand</label>
+                                                <input type="text" class="select form-control" id="brand"
+                                                    name="brand" />
+                                                <div id="brandWarning" class="text-danger"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="row">
+
+
+
+
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="discount">Discount</label>
+                                                <input type="number" class="form-control" id="discount" name="discount"
+                                                    min="0" max="100" />
+                                                <div id="discountWarning" class="text-danger"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="status">Status</label>
+                                                <select class="select form-control" id="status" name="status">
+                                                    <option value="">Select</option>
+                                                    <option value="true">true</option>
+                                                    <option value="false">false</option>
+                                                </select>
+                                                <div id="statusWarning" class="text-danger"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="stockQuantity">Stock Quantity</label>
+                                                <input type="number" class="form-control" id="stockQuantity"
+                                                    name="stock" min="0" />
+                                                <div id="stockWarning" class="text-danger"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="color">Color</label>
+                                                <select class="select form-control" id="color" name="color">
+                                                    <option value="">Select</option>
+                                                    <option value="Red">Red</option>
+                                                    <option value="Blue">Blue</option>
+                                                    <option value="Black">Black</option>
+                                                    <option value="Green">Green</option>
+                                                    <option value="Yellow">Yellow</option>
+                                                    <option value="Purple">Purple</option>
+                                                    <option value="Orange">Orange</option>
+                                                    <option value="Pink">Pink</option>
+
+                                                </select>
+
+                                                <div id="colorWarning" class="text-danger"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="description">Description</label>
+                                                <textarea class="form-control " id="description"
+                                                    name="description"></textarea>
+                                                <div id="descriptionWarning" class="text-danger"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="description">Images</label>
+
+
+                                            <div class="form-group " style="
+                            display: flex;
+                            justify-content: space-between;
+                          ">
+                                                <input type="file" id="images" class="form-control" name="images"
+                                                    accept="image/*" multiple required />
+                                                <input type="hidden" id="croppedImageData" name="croppedImageData" />
+
+                                            </div>
+                                            <div id="imagePreviews">
+                                            </div>
+
+                                            <div id="imagesWarning" class="text-danger"></div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <button style="width: 100%;" class="btn btn-success">
+                                                    Add Product
+                                                </button>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" form-group">
+                        <div class="image-cropper">
+                            <div id="imagesWarning" class="text-danger"></div>
+                        </div>
+
+                        <!-- Image Cropping Modal -->
+                        <!-- Image Cropping Modal -->
+                        <div class="modal fade" id="imageCropModal" tabindex="-1" aria-labelledby="imageCropModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-lg" style="max-width: 500px;">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="imageCropModalLabel">Crop Image</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body" style="max-width: 450px;">
+                                        <img id="imageToCrop" src="" alt="Crop Image" class="img-fluid" />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="cropImageBtn">Crop
+                                            Image</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+    </main>
+
+    <script>
+        document.getElementById('images').addEventListener('change', function (event) {
+            const files = event.target.files;
+            const totalImages = Math.min(files.length, 4); // Limit to 4 images
+            let currentIndex = 0;
+
+            const modal = new bootstrap.Modal(document.getElementById('imageCropModal'));
+            modal.show();
+
+            const cropper = new Cropper(document.getElementById('imageToCrop'), {
+                aspectRatio: 16 / 9,
+                viewMode: 1,
+                crossOrigin: '', // Remove CORS-related image icon
+                // Other Cropper.js options...
+            });
+
+            loadNextImage();
+
+            function loadNextImage() {
+                if (currentIndex < totalImages) {
+                    const file = files[currentIndex];
+                    const reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        const imageUrl = event.target.result;
+                        cropper.replace(imageUrl);
+                    };
+
+                    reader.readAsDataURL(file);
+                    currentIndex++;
+                } else {
+                    modal.hide();
+                }
+            }
+
+            document.getElementById('cropImageBtn').onclick = function () {
+                const croppedCanvas = cropper.getCroppedCanvas();
+                const croppedImage = new Image();
+                croppedImage.src = croppedCanvas.toDataURL();
+
+                croppedImage.onload = function () {
+                    croppedImage.width = 200; // Set width as needed
+                    croppedImage.height = 200; // Set height as needed
+
+                    // Append the cropped image below the corresponding original image
+                    const imagePreviewContainer = document.createElement('div');
+                    imagePreviewContainer.appendChild(croppedImage);
+
+                    document.getElementById('imagePreviews').appendChild(imagePreviewContainer);
+
+                    // Load the next image
+                    loadNextImage();
+                };
+            };
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        function closeFlashMessage() {
+            const flashMessage = document.querySelector('.alert.alert-danger, .alert.alert-success');
+            if (flashMessage) {
+                flashMessage.remove();
+            }
+        }
+    </script>
+
+
+    <footer>
+        <!-- place footer here -->
+        <%- include('../layouts/adminFooter.ejs') %>
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

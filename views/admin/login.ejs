@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin Signup Form</title>
+
+    <!-- Add your CSS styles here -->
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            padding: 0;
+            color: black;
+            background-color: white;
+            /* Set a background color for better visibility */
+        }
+
+        .navbar {
+            background-color: white;
+            overflow: hidden;
+            padding: 15px;
+            color: black;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid black;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .navbar a {
+            color: black;
+            text-decoration: none;
+            padding: 14px 16px;
+            position: relative;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .navbar a.signup::after {
+            content: '';
+            display: block;
+            width: 100%;
+            border-bottom: 2px solid black;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .search-bar-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            margin-right: 0rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-bar {
+            border-radius: 15px;
+            overflow: hidden;
+            width: 12rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: calc(100% - 20px);
+            /* Adjust the width and subtract the padding */
+            padding: 8px;
+            margin-bottom: 15px;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            /* Add bottom border */
+            box-sizing: border-box;
+            outline: none;
+            /* Remove default outline */
+        }
+
+        .navbar-left a {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .content-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            margin: 50px auto;
+            /* Adjust the margin value */
+        }
+
+        .sample-image,
+        .form-container {
+            width: 48%;
+            /* Adjust the width as needed */
+            box-sizing: border-box;
+        }
+
+        .sample-image {
+            max-width: 100%;
+            width: 30rem;
+            height: 30.5rem;
+            margin-left: 10rem;
+            border-radius: 6px;
+            /* Ensure the image doesn't exceed its container */
+        }
+
+        .form-container {
+            margin-left: 6%;
+            margin-right: 20%;
+            padding: 20px;
+
+
+
+
+            /* Center the content within the form */
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form-container input {
+            width: calc(100% - 20px);
+            /* Adjust the width and subtract the padding */
+            padding: 8px;
+            margin-bottom: 15px;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            /* Add bottom border */
+            box-sizing: border-box;
+            outline: none;
+            /* Remove default outline */
+        }
+
+        .form-container button {
+            background-color: #2063a3;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 auto;
+            /* Center the button within the form */
+            display: block;
+            /* Make the button a block element */
+            width: 100%;
+        }
+
+        .form-container a {
+            display: inline;
+            text-align: center;
+            margin-top: 10px;
+            color: #333;
+
+        }
+
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+
+
+        .navbar-left {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            /* Set your desired color */
+            text-decoration: none;
+            /* Remove underline */
+        }
+
+        a.Signup-link {
+            color: black;
+            transition: color 0.3s ease;
+        }
+
+        a.Signup-link:hover {
+            color: rgb(0, 136, 255);
+        }
+    </style>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Mukta:wght@800&family=Noto+Sans&family=Nunito:ital,wght@0,300;0,600;1,200&family=Ruwudu&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-left">
+                <a href="#">Shopsphere</a>
+            </div>
+
+            <div class="navbar-middle">
+                <a href="#">Contact</a>
+                <a href="#">About</a>
+                <a href="#" class="signup">login</a>
+            </div>
+
+            <!-- <div class="navbar-right">
+                <div class="search-bar-container">
+                    <div class="search-icon">🔍</div>
+                    <div class="search-bar">
+                        <input type="text" placeholder="what are you looking for?">
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+    <div class="content-container">
+        <img src="https://img.freepik.com/premium-vector/freelance-sticker-logo-icon-vector-man-with-desktop-blogger-with-laptop-icon-vector-isolated-background-eps-10_399089-1098.jpg"
+            alt="Sample Image" class="sample-image">
+
+        <div class="form-container">
+            <h1>Admin</h1>
+            <h2>Login to Shopsphere</h2>
+            <form action="" method="post">
+
+
+
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+                <button type="submit">Login</button>
+
+                <a href="#">Forgot Password?</a>
+                <p class="login">Didn't have an account?<a href="/admin/Register" class="Signup-link">Signup</a></p>
+            </form>
+            <% if(typeof message !=='undefined' ) { %>
+                <p style="color: green;">
+                    <%= message %>
+                </p>
+                <% } %>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2023 Shopsphere. All rights reserved.
+    </div>
+
+</body>
+
+</html>

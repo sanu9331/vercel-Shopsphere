@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>edit products</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+</head>
+
+<body>
+    <header>
+        <!-- place navbar here -->
+        <%- include('../layouts/adminHeader.ejs') %>
+    </header>
+    <main>
+        <% if (messages.error) { %>
+            <div class="alert alert-danger">
+                <%= messages.error %>
+                    <button type="button" class="close" aria-label="Close" onclick="closeFlashMessage()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <% } else if (messages.success) { %>
+                <div class="alert alert-success">
+                    <%= messages.success %>
+                        <button type="button" class="close" aria-label="Close" onclick="closeFlashMessage()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <% } %>
+                    <div class="container form-box mt-5 ">
+
+                        <div class="row d-flex justify-content-center  ">
+                            <div class="col-md-10 col-lg-12 col-xl-12">
+
+
+                                <form method="post" name="ProductForm" id="ProductForm"
+                                    action="/admin/products/edit/<%=ProductData._id %>" enctype="multipart/form-data">
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="name">Name</label>
+                                                <input type="text" value="<%-ProductData.name%>" class="form-control"
+                                                    id="name" name="name">
+                                                <div id="nameWarning" class="text-danger"></div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="price">Price</label>
+                                                <input type="number" value="<%=ProductData.price%>" class="form-control"
+                                                    id="price" name="price" min="0">
+                                                <div id="priceWarning" class="text-danger"></div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="category">Category</label>
+                                                <select class="select form-control" id="category" name="category">
+                                                    <% categories.forEach(category=> { %>
+                                                        <option value="<%= category.category %>">
+                                                            <%= category.category %>
+                                                        </option>
+                                                        <% }); %>
+                                                </select>
+                                                <div id="categoryWarning" class="text-danger"></div>
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="subCategory">Sub Category</label>
+                                                <select class="select form-control" id="subCategory" name="subCategory">
+
+                                                    <% categories.forEach(category=> { %>
+                                                        <option value="<%= category.sub_Category %>">
+                                                            <%= category.sub_Category %>
+                                                        </option>
+                                                        <% }); %>
+                                                </select>
+                                                <div id="subCategoryWarning" class="text-danger"></div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <!-- <div class="form-group">
+                                    <label for="brand">Brand</label>
+                                    <select class="select form-control" id="brand" name="brand">
+                                        <option value="<%=ProductData.brand  %>">
+                                            <%=ProductData.brand %>
+                                        </option>
+
+                                        <option value="Apple">Apple</option>
+                                        <option value="Samsung">Samsung</option>
+                                        <option value="Redmi">Redmi</option>
+                                        <option value="Oppo">Oppo</option>
+                                        <option value="vivo">Vivo</option>
+                                        <option value="Boat">Boat</option>
+                                        <option value="Zebronics">Zebronics</option>
+                                        <option value="Asus">Asus</option>
+                                        <option value="Dell">Dell</option>
+                                        <option value="Asus">Asus</option>
+                                        <option value="Lenovo">Lenovo</option>
+                                        <option value="Hp">Hp</option>
+
+                                    </select>
+                                    <div id="brandWarning" class="text-danger"></div>
+
+                                </div> -->
+                                            <label for="brand">Brand</label>
+                                            <input type="text" class="select form-control" id="brand" name="brand"
+                                                value=" <%=ProductData.brand %>" />
+                                            <div id="brandWarning" class="text-danger"></div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                    </div>
+
+                                    <div class="row">
+                                        <!-- ***** discount input ***** -->
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="discount">Discount</label>
+                                                <input type="number" value="<%=ProductData.discount%>"
+                                                    class="form-control" id="discount" name="discount" min="0">
+                                                <div id="discountWarning" class="text-danger"></div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="status">Status</label>
+                                                <select class="select form-control" id="status" name="status">
+                                                    <% if (ProductData.status===true) { %>
+                                                        <option value="true" selected>true</option>
+                                                        <option value="false">false</option>
+                                                        <% } else { %>
+                                                            <option value="true">true</option>
+                                                            <option value="false" selected>false</option>
+                                                            <% } %>
+                                                                <!-- Add more options here if needed -->
+                                                </select>
+                                                <div id="statusWarning" class="text-danger"></div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="stockQuantity">Stock Quantity</label>
+                                                <input type="number" value="<%=ProductData.stock  %>"
+                                                    class="form-control" id="stockQuantity" name="stock" min="0">
+                                                <div id="stockWarning" class="text-danger"></div>
+
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="color">Color</label>
+                                                <select class="select form-control" id="color" name="color">
+                                                    <option value="">Select</option>
+                                                    <option value="Red">Red</option>
+                                                    <option value="Blue">Blue</option>
+                                                    <option value="Black">Black</option>
+                                                    <option value="Green">Green</option>
+                                                    <option value="Yellow">Yellow</option>
+                                                    <option value="Purple">Purple</option>
+                                                    <option value="Orange">Orange</option>
+                                                    <option value="Pink">Pink</option>
+                                                </select>
+
+                                                <div id="colorWarning" class="text-danger"></div>
+                                            </div>
+                                        </div> -->
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="color">Color</label>
+                                                <select class="select form-control" id="color" name="color">
+                                                    <option value="" <%=!ProductData.variants ||
+                                                        !ProductData.variants[0] ? 'selected' : '' %>>Select</option>
+                                                    %>>Select</option>
+                                                    <option value="red" <%=ProductData.variants &&
+                                                        ProductData.variants[0] && ProductData.variants[0].color==='Red'
+                                                        ? 'selected' : '' %>>Red</option>
+                                                    <option value="Blue" <%=ProductData.variants &&
+                                                        ProductData.variants[0] &&
+                                                        ProductData.variants[0].color==='blue' ? 'selected' : '' %>
+                                                        >Blue
+                                                    </option>
+                                                    <option value="Black" <%=ProductData.variants &&
+                                                        ProductData.variants[0] &&
+                                                        ProductData.variants[0].color==='black' ? 'selected' : '' %>
+                                                        >Black
+                                                    </option>
+                                                    <option value="Green" <%=ProductData.variants &&
+                                                        ProductData.variants[0] &&
+                                                        ProductData.variants[0].color==='green' ? 'selected' : '' %>
+                                                        >Green
+                                                    </option>
+                                                    <option value="Yellow" <%=ProductData.variants &&
+                                                        ProductData.variants[0] &&
+                                                        ProductData.variants[0].color==='yellow' ? 'selected' : '' %>
+                                                        >Yellow
+                                                    </option>
+                                                    <option value="Purple" <%=ProductData.variants &&
+                                                        ProductData.variants[0] &&
+                                                        ProductData.variants[0].color==='purple' ? 'selected' : '' %>
+                                                        >Purple
+                                                    </option>
+                                                    <option value="Orange" <%=ProductData.variants &&
+                                                        ProductData.variants[0] &&
+                                                        ProductData.variants[0].color==='orange' ? 'selected' : '' %>
+                                                        >Orange
+                                                    </option>
+                                                    <option value="Pink" <%=ProductData.variants &&
+                                                        ProductData.variants[0] &&
+                                                        ProductData.variants[0].color==='pink' ? 'selected' : '' %>
+                                                        >Pink
+                                                    </option>
+                                                </select>
+
+                                                <div id="colorWarning" class="text-danger"></div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="description">Description</label>
+                                                <textarea class="form-control" id="description"
+                                                    name="description"><%=ProductData.description  %></textarea>
+                                                <div id="descriptionWarning" class="text-danger"></div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="images">Images</label>
+                                                <input type="file" class="form-control" id="images" name="images"
+                                                    multiple accept="image/*">
+                                                <div id="imagenWarning" class="text-danger"></div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-8  ">
+                                                <div class="form-group ">
+
+                                                    <table class="table table-responsive">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Color</th>
+                                                                <th scope="col">Images</th>
+                                                                <th scope="col">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <% for (let i=0; i < ProductData.variants.length; i++) { %>
+                                                                <tr>
+                                                                    <td><strong>
+                                                                            <%= ProductData.variants[i].color %>
+                                                                        </strong></td>
+                                                                    <td>
+                                                                        <div class="d-flex">
+                                                                            <% if (ProductData.variants &&
+                                                                                ProductData.variants.length> 0) { %>
+                                                                                <% for (let i=0; i <
+                                                                                    ProductData.variants.length; i++) {
+                                                                                    %>
+                                                                                    <!-- Render other variant details -->
+
+                                                                                    <% if
+                                                                                        (ProductData.variants[i].images
+                                                                                        &&
+                                                                                        ProductData.variants[i].images.length>
+                                                                                        0) { %>
+                                                                                        <% for (let j=0; j <
+                                                                                            ProductData.variants[i].images.length;
+                                                                                            j++) { %>
+                                                                                            <img width="100px"
+                                                                                                height="100px"
+                                                                                                src="/images/productImages/<%= ProductData.variants[i].images[j] %>"
+                                                                                                alt="Product Image <%= j + 1 %>">
+                                                                                            <% } %>
+                                                                                                <% } %>
+                                                                                                    <% } %>
+                                                                                                        <% } %>
+
+                                                                                                            <input
+                                                                                                                type="hidden"
+                                                                                                                name="existingImages"
+                                                                                                                value="<%= ProductData.variants[i].images.join(',') %>">
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <!-- <td>
+                                                            <a href="javascript:void(0);" class="btn btn-danger btn-sm"
+                                                                onclick="confirmDelete('','/admin/products/delete-variant?id=<%= ProductData._id %>&color=<%=ProductData.variants[i].color %>')">Delete</a>
+                                                        </td> -->
+                                                                    <td>
+                                                                        <a href="javascript:void(0);"
+                                                                            class="btn btn-danger btn-sm"
+                                                                            onclick="confirmDelete('<%= ProductData._id %>','<%= ProductData.variants[i].color %>')">Delete</a>
+                                                                    </td>
+
+
+                                                                </tr>
+                                                                <% } %>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-5">
+                                                <button style="width: 100%;" type="submit" class="btn btn-success mb-3"
+                                                    onclick="return validateForm()">Edit Product</button>
+
+                                            </div>
+                                        </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    </div>
+
+    </main>
+
+    <script>
+        delete operation
+        function confirmDelete(productId, color) {
+            // Use a confirmation dialog
+            if (confirm('Are you sure you want to delete this category?')) {
+                // If the user confirms, redirect to the delete route
+                window.location.href = `/admin/products/delete-variant?id=${productId}&color=${color}`;
+            }
+        }
+        // function confirmDelete(productId, color) {
+        //     // Use a confirmation dialog
+        //     if (confirm('Are you sure you want to delete this category?')) {
+        //         // If the user confirms, redirect to the delete route
+        //         window.location.href = `/admin/products/delete-variant?id=${productId}&color=${color}`;
+        //     }
+        // }
+
+
+        function validateForm() {
+
+            // Name validation
+            var name = document.getElementById('name').value;
+            var price = document.getElementById('price').value;
+            var description = document.getElementById('description').value;
+            var wordCount = description.trim().split(/\s+/).length;
+            var category = document.getElementById('category').value;
+            var sub_category = document.getElementById('subCategory').value;
+            var brand = document.getElementById('brand').value;
+            var discount = document.getElementById('discount').value;
+            var status = document.getElementById('status').value;
+            var stockQuantity = document.getElementById('stockQuantity').value;
+            var color = document.getElementById('color');
+
+
+
+            var images = document.forms['ProductForm']['images']
+
+
+            // Reset all warnings
+            document.getElementById('nameWarning').innerText = '';
+            document.getElementById('priceWarning').innerText = '';
+            document.getElementById('descriptionWarning').innerText = '';
+            document.getElementById('categoryWarning').innerText = '';
+            document.getElementById('brandWarning').innerText = '';
+            document.getElementById('discountWarning').innerText = '';
+            document.getElementById('statusWarning').innerText = '';
+            document.getElementById('stockWarning').innerText = '';
+            document.getElementById('subCategoryWarning').innerText = '';
+            document.getElementById('imagesWarning').innerText = '';
+            document.getElementById('colorWarning').innerText = '';
+
+            // Validate all fields at once
+            if (!name.trim()) {
+                document.getElementById('nameWarning').innerText = 'Name cannot be empty.';
+            }
+            if (!price || isNaN(price)) {
+                document.getElementById('priceWarning').innerText = 'Price should be a valid number.';
+            }
+            if (!description.trim() || wordCount < 10) {
+                document.getElementById('descriptionWarning').innerText = 'Description should contain at least 10 words.';
+            }
+            if (!category) {
+                document.getElementById('categoryWarning').innerText = 'Category cannot be empty.';
+            }
+            if (!sub_category) {
+                document.getElementById('subCategoryWarning').innerText = 'Sub Category cannot be empty.';
+            }
+            if (!brand) {
+                document.getElementById('brandWarning').innerText = 'Brand should be a valid value.';
+            }
+            // Check if discount is less than 0 or greater than 100
+            if (discount < 0 || discount > 100) {
+                document.getElementById('discountWarning').innerText = 'Discount must be between 0 and 100';
+            } else if (!discount) {
+                // If discount is not provided, set a default warning
+                document.getElementById('discountWarning').innerText = 'Discount (Optional)';
+            }
+
+            if (!status) {
+                document.getElementById('statusWarning').innerText = 'Status cannot be empty.';
+            }
+            if (!stockQuantity) {
+                document.getElementById('stockWarning').innerText = 'StockQuantity cannot be empty.';
+            } else if (stockQuantity < 0) {
+                document.getElementById('stockWarning').innerText = 'StockQuantity must be geater than 0';
+
+
+            }
+            if (!color) {
+                document.getElementById('colorWarning').innerText = 'color cannot be empty.';
+            }
+            if (Array.from(images).some(image => image.value !== '')) {
+                document.getElementById('imagesWarning').innerText = 'Images cannot be empty.';
+            }
+
+
+            // Check if any warning messages were set, return false if any field is invalid
+            if (document.getElementById('nameWarning').innerText ||
+                document.getElementById('priceWarning').innerText ||
+                document.getElementById('descriptionWarning').innerText ||
+                document.getElementById('categoryWarning').innerText ||
+                document.getElementById('subCategoryWarning').innerText ||
+                document.getElementById('brandWarning').innerText ||
+                document.getElementById('discountWarning').innerText ||
+                document.getElementById('statusWarning').innerText ||
+                document.getElementById('stockWarning').innerText ||
+                document.getElementById('colorWarning').innerText ||
+                document.getElementById('imagesWarning').innerText) {
+                return false;
+            }
+            console.log('validateForm function called');
+            // Form is valid
+            return true;
+        }
+    </script>
+
+    <script>
+        function closeFlashMessage() {
+            const flashMessage = document.querySelector('.alert.alert-danger, .alert.alert-success');
+            if (flashMessage) {
+                flashMessage.remove();
+            }
+        }
+    </script>
+    <footer>
+        <!-- place footer here -->
+        <%- include('../layouts/adminFooter.ejs') %>
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

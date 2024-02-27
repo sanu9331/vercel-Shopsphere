@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>wallet</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        #walletBalance {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        #transactionTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        #transactionTable th,
+        #transactionTable td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        #addMoneyButton {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+    <!-- Razorpay SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+</head>
+
+<body>
+    <header>
+        <!-- place navbar here -->
+        <%- include('../layouts/header.ejs') %>
+    </header>
+    <main>
+
+        <div class="container mt-4">
+            <a href="/userProfile"><-back </a>
+                    <h1>My Wallet</h1>
+
+                    <div id="walletBalance">
+                        Wallet Balance: $<span id="balance">
+                            <%= totalWalletPrice.toFixed(2) %>
+                                <!-- <%= (totalWalletPrice / 100).toFixed(2) %> -->
+
+                        </span>
+                    </div>
+
+                    <!-- <button id="addMoneyButton" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#addMoneyModal">Add
+                        Money</button> -->
+                    <div class="d-flex justify-content-end mb-3">
+                        <button id="addMoneyButton" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#addMoneyModal">Add Money</button>
+                    </div>
+
+                    <table id="transactionTable" class="table mt-3">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Payment Type</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Description</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody id="transactionBody">
+                            <% walletData.forEach(transaction=> { %>
+                                <tr>
+                                    <td>
+                                        <%= transaction.paymentType %>
+                                    </td>
+                                    <td>
+                                        <%= transaction.amount.toFixed(2) %>
+                                            <!-- <%= (transaction.amount / 100).toFixed(2) %> -->
+
+                                    </td>
+                                    <td>
+                                        <%= new Date(transaction.date).toLocaleString() %>
+                                    </td>
+                                    <td>
+                                        <%= transaction.description %>
+                                    </td>
+
+                                </tr>
+                                <% }); %>
+                        </tbody>
+                    </table>
+
+                    <!-- Add Money Modal -->
+                    <div class="modal fade" id="addMoneyModal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Add Money to Wallet</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- <form action="/wallet-order" method="post">  -->
+                                    <form id="addMoneyForm">
+                                        <label for="amount">Amount: $</label>
+                                        <input type="number" id="amount" name="amount" min="0" step="1"
+                                            class="form-control">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Add
+                                        Money</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+        </div>
+
+    </main>
+
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const addMoneyForm = document.getElementById('addMoneyForm');
+
+            addMoneyForm.addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                const amount = document.getElementById('amount').value;
+
+                // Make an AJAX request to your server to initiate Razorpay payment
+                const response = await fetch('/wallet-order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ amount }),
+                });
+
+                const responseData = await response.json();
+
+                // Initiate Razorpay Checkout
+                const options = {
+                    key: 'rzp_test_2iKg9k1NXeJb8P',
+                    amount: responseData.amount,
+                    currency: responseData.currency,
+                    name: 'shopsphere',
+                    description: 'Add money to wallet',
+                    order_id: responseData.id,
+                    handler: function (response) {
+                        alert("payment successful");
+                    },
+                    prefill: {
+                        email: 'user@example.com',
+                        contact: '8675490402',
+                    },
+                    theme: {
+                        color: '#3399cc',
+                    },
+                };
+
+                const razorpayInstance = new Razorpay(options);
+                razorpayInstance.open();
+            });
+        });
+    </script> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const addMoneyForm = document.getElementById('addMoneyForm');
+
+            addMoneyForm.addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                const amount = document.getElementById('amount').value;
+
+                // Make an AJAX request to your server to initiate Razorpay payment
+                const response = await fetch('/wallet-order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        amount,
+                        // razorpay_payment_id: '',
+                    }),
+                });
+
+                const responseData = await response.json();
+
+                // Initiate Razorpay Checkout
+                const options = {
+                    key: responseData.key_id,
+                    amount: responseData.amount,
+                    currency: responseData.currency,
+                    name: 'shopsphere',
+                    description: 'Add money to wallet',
+                    order_id: responseData.id,
+                    handler: async function (response) {
+                        // Update the Razorpay Payment ID in the initial request
+                        console.log('razorpay response:', response);
+                        // document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id || '';
+
+                        // Make another request to your server to complete the transaction
+                        try {
+                            const completionResponse = await fetch('/complete-transaction', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    amount: responseData.amount, // Include the amount in the request body
+                                }),
+                            });
+
+                            if (completionResponse.ok) {
+                                alert("Payment successful");
+                                window.location.href = '/load-wallet';
+                            } else {
+                                console.error('Failed to complete the transaction:', completionResponse.statusText);
+                                alert("Payment failed");
+                            }
+                        } catch (error) {
+                            console.error('Error completing the transaction:', error);
+                            alert("Payment failed");
+                        }
+                    },
+                    prefill: {
+                        email: 'user@example.com',
+                        contact: '8675490402',
+                    },
+                    theme: {
+                        color: '#3399cc',
+                    },
+                };
+
+                const razorpayInstance = new Razorpay(options);
+                razorpayInstance.open();
+            });
+        });
+    </script>
+
+
+
+    <footer>
+        <!-- place footer here -->
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

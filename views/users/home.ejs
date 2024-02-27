@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>user home</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+    <style>
+        .product-container:hover {
+            box-shadow: 0 0 10px rgba(18, 18, 18, 0.171);
+            /* Adjust the shadow values as needed */
+            transition: box-shadow 0.3s ease-in-out;
+            /* Optional: Add a smooth transition effect */
+        }
+    </style>
+
+    <!-- footer styles -->
+    <style>
+        body {
+            margin-top: 20px;
+        }
+
+        .footer {
+            background: whitesmoke;
+            padding-bottom: 50px;
+            padding-top: 80px;
+        }
+
+        .footer_menu {
+            margin-bottom: 20px;
+        }
+
+        .footer_menu ul {
+            list-style: none;
+            text-align: center;
+        }
+
+        .footer_menu ul li {
+            display: inline-block;
+        }
+
+        .footer_menu ul li a {
+            color: black;
+            padding: 0 10px;
+            -webkit-transition: 0.3s;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .footer_menu ul li a:hover {
+            color: #554c86;
+        }
+
+        /*START FOOTER SOCIAL DESIGN*/
+        .footer_profile {
+            margin-bottom: 40px;
+        }
+
+        .footer_profile ul {
+            list-style: outside none none;
+            margin: 0;
+            padding: 0
+        }
+
+        .footer_profile ul li {
+            display: inline-block;
+        }
+
+        @media only screen and (max-width:480px) {
+            .footer_profile ul li {
+                margin: 2px;
+            }
+        }
+
+        .footer_profile ul li a img {
+            width: 60px;
+        }
+
+        .footer_profile ul li a {
+            background: #554c86;
+            width: 40px;
+            height: 40px;
+            display: block;
+            text-align: center;
+            margin-right: 5px;
+            border-radius: 50%;
+            line-height: 40px;
+            box-sizing: border-box;
+            text-decoration: none;
+            -webkit-transition: .3s;
+            transition: .3s;
+            color: #fff;
+        }
+
+
+
+        .footer_copyright {
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-size: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: black;
+        }
+    </style>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header>
+        <!-- place navbar here -->
+        <%- include('../layouts/header.ejs') %>
+    </header>
+    <main>
+
+        <!-- <div id="carouselExampleFade" class="carousel slide border  carousel-fade" data-ride="carousel">
+            <div class="carousel-inner">
+
+                <% banner.forEach((banner, index)=> { %>
+                    <div
+                        class="<%= index === 0 ? 'carousel-item active' : 'carousel-item' %> d-flex justify-content-center">
+                        <img height="350" style="-webkit-user-drag: none; background-size: cover;" data-ride="1000"
+                            data-slide="carsoul" class="d-block w-75 mt-4"
+                            src="/images/bannerImages/<%= banner.image %>" alt="Banner <%= index + 1 %>">
+                    </div>
+                    <% }); %>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div> -->
+
+        <div class="container text-center">
+            <div class="row">
+                <h3 class="mt-5 fs-5 text-start">Top Categories</h3>
+                <% category.forEach(category=> { %>
+                    <div class="col-md-5 col-lg-4 col-xl-3 col-xxl-3 mb-lg mb-md-6 col-sm-6 col-12  ">
+                        <div style="border-radius: 5%; background-color: #18ACFE; width: 100%; min-width: 250px; height: 250px;"
+                            class="zoom-out-effect card border shadow p-2  mt-sm-5  mt-md-5 mt-lg-3 mt-xl-0 mt-xxl-0 mt-4">
+                            <a style="-webkit-user-drag: none;" href="/home/products/<%=category.category%>">
+                                <!-- Add your actual link in the href attribute -->
+                                <% for (let i=0; i <=0; i++) { %>
+                                    <img style="margin-bottom: 5px;
+                          -webkit-user-drag: none; 
+                        " class="card-img-top img-fluid" src="/images/categoryImages/<%= category.image%>"
+                                        alt="Product Image <%= i + 1 %>" />
+                                    <% } %>
+                            </a>
+                            <p style="font-weight: bold; margin-top: 5px;">
+                                <%= category.category %>
+                            </p>
+                        </div>
+                    </div>
+                    <% }); %>
+            </div>
+            <div class="d-flex justify-content-end">
+                <a href="/viewAllCategoryes" style="text-decoration: none; font-size: 18px; margin-top: 1rem;">view all
+                    categories➡️</a>
+            </div>
+        </div>
+
+
+        <section id="featured-brand" class="mb-5"> <!-- Add margin-bottom here -->
+            <div class="container-fluid mt-5 mb-5">
+                <div class="row">
+                    <h1 class="col-12 text-center" style="font-size: 30px;">Featured Brands</h1>
+                    <div class="col-sm-12 col-md-12 col-lg-12 d-flex flex-wrap justify-content-evenly mt-5">
+                        <img class="mb-3" style="width: 40px; height: 40px; -webkit-user-drag: none; "
+                            src="/images/apple.png" alt="">
+                        <img class="mb-3" style="width: 40px; height: 40px; -webkit-user-drag: none; "
+                            src="/images/hp.png" alt="">
+                        <img class="mb-3" style="width: 40px; height: 40px; -webkit-user-drag: none; "
+                            src="/images/dell.png" alt="">
+                        <img class="mb-3" style="width: 80px; height: 30px; margin-top: 10px; -webkit-user-drag: none; "
+                            src="/images/lenovo.png" alt="">
+                        <img class="mb-3"
+                            style="width: 100px; height: 30px; margin-top: 10px; -webkit-user-drag: none; "
+                            src="/images/samsung.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <%if(ProductData !=='undefined' ) {%>
+
+
+            <div class="container text-center mb-5">
+                <div class="row">
+                    <h3 class="mt-5 fs-5 text-start">Top Products</h3>
+                    <% ProductData.forEach(product=> { %>
+
+                        <div
+                            class="col-md-5 col-lg-4 col-xl-3 col-xxl-3 mb-lg mb-md-6 col-sm-6 col-12 product-container">
+                            <!-- Use col-lg-4 to include three cards in one row -->
+                            <a href="/home/product/details/<%=product._id%>" class="text-decoration-none text-dark">
+                                <div class="card border-0 h-100 p-2 " id="product-card">
+                                    <img style="margin-bottom: 5px; background-size: cover;" width="50px" height="230px"
+                                        class="card-img-top"
+                                        src="/images/productImages/<%= product.variants[0].images[0] %>"
+                                        alt="Product Image " />
+                                    <div class="card-body" style="height: 130px;">
+                                        <h6>
+                                            <%= product.name.substring(0, 40, product.name.length / 2) %>
+                                        </h6>
+                                        <p class="card-text"
+                                            data-price="<%= Number(product.price - (product.price * (product.discount / 100)))%>">
+                                            Price: <b>Rs:<%= Number(product.price - (product.price * (product.discount /
+                                                    100))).toLocaleString() %></b></p>
+                                        <div class="d-flex justify-content-between">
+                                            <p class="card-text text-success">%<%= product.discount %> off</p>
+                                            <p class="small text-danger"><s>Rs<%= product.price %></s></p>
+                                        </div>
+                                    </div>
+                            </a>
+
+
+
+                            <!-- Inside the loop where you render product details -->
+                            <!-- <button class=" btn btn-outline-primary addToCartButton"
+                                data-product-id="<%= product._id %>"
+                                data-product-price="<%= Number(product.price - (product.price * (product.discount / 100))) %>">Add
+                                to Cart</button> -->
+
+
+
+
+                        </div>
+                </div>
+                <% }); %>
+
+            </div>
+            <div class="d-flex justify-content-end">
+                <a href="/viewAllProducts" style="text-decoration: none; font-size: 18px; margin-top: 1rem;">View All
+                    Products➡️</a>
+            </div>
+            </div>
+
+            <%} %>
+
+
+                <section class="bg-img text-center mt-5 mb-5">
+                    <div class="container" style="background-color: #18ACFE; height: 300px; border-radius: 20px;">
+                        <h2 class="pt-4">
+                            NEWSLETTER
+                        </h2>
+                        <h6 class="font-alt mt-2">subscribe to our newsletter get latest updates</h6>
+                        <br><br>
+                        <form class="form-subscribe" action="#">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-lg" placeholder="Your email address"
+                                    pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                                    title="Enter a valid email address" required>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success btn-lg" type="submit">Subscribe</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+
+    </main>
+    <footer>
+        <!-- place footer here -->
+        <div class="footer">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                        <div class="footer_menu">
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">About</a></li>
+                                <li><a href="#">Service</a></li>
+                                <li><a href="#">Works</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer_copyright">
+                            <p>© 2021 Sai. All Rights Reserved.</p>
+                        </div>
+                        <div class="footer_profile">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                            </ul>
+                        </div>
+                    </div><!--- END COL -->
+                </div><!--- END ROW -->
+            </div><!--- END CONTAINER -->
+        </div>
+
+
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

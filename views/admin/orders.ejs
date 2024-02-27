@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>orders</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+    <style>
+        /* Define your custom styles here */
+        @media screen and (max-width: 768px) {
+            .table-responsive {
+                overflow-x: auto;
+            }
+
+            table {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <!-- place navbar here -->
+        <%- include('../layouts/adminHeader.ejs') %>
+    </header>
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+            <!-- <div class="row">
+                <div class="col">
+                    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">User</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div> -->
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body d-flex align-items-center">
+
+                            <img src="<%= userData.image ? '/images/userImages/' + userData.image : 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp' %>"
+                                alt=" avatar" class="rounded-circle img-fluid"
+                                style="width: 5rem; height: 5rem; margin-right: 1rem;">
+                            <h5 class="my-3">
+                                <%= userData.name %>
+                            </h5>
+                            <!-- <div style="margin-left: auto;">
+                                <a href="/userProfile-edit?id=<%= userData._id %>" class="btn btn-primary">Edit</a>
+                            </div> -->
+                            <div class="d-flex justify-content-center mb-2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="col-lg-4" style="width:27%">
+                    <div class="card mb-4">
+                        <div class="card-body d-flex align-items-center">
+                            <img src="<%= userData.image ? '/images/userImages/' + userData.image : 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp' %>"
+                                alt=" avatar" class="rounded-circle img-fluid"
+                                style="width: 5rem; height: 5rem; margin-right: 1rem;">
+                            <h5 class="my-3">
+                                <%= userData.name %>
+                            </h5>
+                            <div style="margin-left: auto;">
+                                <a href="/userProfile-edit?id=<%= userData._id %>" class="btn btn-primary">Edit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+
+
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Full Name
+                                    </p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">
+                                        <%= userData.name %>
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Email</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">
+                                        <%= userData.email %>
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+
+
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Mobile</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">
+                                        <%= userData.mobile %>
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Gender</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">
+                                        <%= userData.gender ? userData.gender : 'Not specified' %>
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Address</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">
+                                        <%= userData.address %>
+                                    </p>
+                                </div>
+                            </div> -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Address</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <% if (userData.address && userData.address.length> 0) { %>
+                                        <% userData.address.forEach(address=> { %>
+                                            <!-- <p class="text-muted mb-0">
+                                                <%= address %>
+                                            </p> -->
+                                            <div class="card">
+                                                <div class="card-body">🏠<%= address.streetaddress %>, <%= address.city
+                                                            %>, <%= address.state %>, <%= address.postalcode %>, <%=
+                                                                        address.country %>
+                                                </div>
+                                            </div>
+
+                                            <% }); %>
+                                                <% } else { %>
+                                                    <p class="text-muted mb-0">No address specified</p>
+                                                    <% } %>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+    </section>
+
+
+    <section
+        style="background-color: #eee; width: 100%;  margin: 0 auto; padding: 10px; border-radius: 7px; margin-bottom: 120px;">
+        <div class="container">
+
+            <section style="background-color: #b3bbc0; width: 80%;  margin: 0 auto; padding: 10px; border-radius: 7px;">
+                <div class="container table-responsive">
+
+                    <div class="input-group mb-2" style="width: 14rem; margin-inline-start: auto;">
+                        <form id="searchForm" method="GET" action="/admin/orders?userID=<%= userID %>">
+                            <div class="input-group mb-2" style="min-width:5rem;margin-left: 5px; margin-right: 5px;">
+                                <input type="search" name="search" class="form-control rounded" placeholder="Search"
+                                    aria-label="Search" aria-describedby="search-addon" />
+                                <button type="submit" class="btn btn-success" data-mdb-ripple-init>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem"
+                                        fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path
+                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <table class="table table-centered mb-0 table-nowrap" style="background-color: white;">
+                        <thead class="text-center table-dark">
+                            <tr>
+                                <th class="border-top-0" scope="col">Customer</th>
+                                <th class="border-top-0" scope="col">Order Date</th>
+                                <th class="border-top-0" scope="col">Status</th>
+                                <th class="border-top-0" scope="col">Payment Method</th>
+                                <th class="border-top-0" scope="col">Total Amount</th>
+                                <!-- <th class="border-top-0" scope="col">payment status</th> -->
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <% orders.forEach((order, orderIndex)=> { %>
+                                <tr>
+                                    <td>
+                                        <% if (order.customer && order.customer.name) { %>
+                                            ⭐ <%= order.customer.name %>
+                                                <% } else { %>
+                                                    No Name
+                                                    <% } %>
+                                    </td>
+                                    <td>
+                                        <%= order.orderDate.toDateString() %>
+                                    </td>
+                                    <td>
+
+
+                                        <form action="/admin/orders/<%= order._id %>" method="post"
+                                            onsubmit="saveOrderStatus('<%= order._id %>')">
+
+                                            <% if (order.status==='returned' ) { %>
+                                                <span style="color: #ff69b4;">
+                                                    returned
+                                                </span>
+                                                <% } else { %>
+                                                    <select class="select" id="status_<%= order._id %>" name="status">
+                                                        <option value="select" <% if (order.status==='select' ) { %>
+                                                            selected <% } %>>select</option>
+                                                        <option value="pending" <% if (order.status==='pending' ) { %>
+                                                            selected <% } %>>pending</option>
+                                                        <option value="processing" <% if (order.status==='processing' )
+                                                            { %> selected <% } %>
+                                                                >processing</option>
+                                                        <option value="shipped" <% if (order.status==='shipped' ) { %>
+                                                            selected <% } %>>shipped</option>
+                                                        <option value="delivered" <% if (order.status==='delivered' ) {
+                                                            %> selected <% } %>>delivered</option>
+                                                    </select>
+
+                                                    <input type="hidden" name="userID" value="<%= userData._id %>"
+                                                        id="userID_<%= order._id %>">
+
+                                                    <div class="select-custom-content">
+                                                        <button type="submit">save</button>
+                                                    </div>
+                                                    <% } %>
+                                        </form>
+
+                                    </td>
+                                    <td>
+                                        <%= order.paymentMethod %>
+                                    </td>
+                                    <td>
+
+                                        <!-- $ <%= (order.totalAmount/100).toFixed(2) %> -->
+                                        <% if (order.couponDiscountPrice !==null) { %>
+                                            $ <%= order.couponDiscountPrice %>
+                                                <% } else { %>
+                                                    <!-- $ <%= (order.totalAmount / 100).toFixed(2) %> -->
+                                                    $ <%= order.totalAmount %>
+                                                        <% } %>
+                                    </td>
+
+
+                                    <td colspan="3"></td>
+
+                                    <% order.items.forEach((item, itemIndex)=> { %>
+
+                                        <td colspan="6"></td>
+                                        <!-- <td>
+                                            <a href="/loadViewProductsModal/<%= order._id %>" class="btn btn-primary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#mailModal2_<%= orderIndex %>_<%= itemIndex %>">
+                                                View Products
+                                            </a>
+                                        </td> -->
+                                        <td>
+                                            <a href="/admin/adminOrderDetailPage?orderId=<%= order._id %>"
+                                                class="btn btn-primary">
+                                                View Products
+                                            </a>
+                                        </td>
+                                        <!-- <td><a href="/admin/adminOrderDetailPage?orderId=<%= order._id %>">view P</a>
+                                        </td> -->
+                                        <td>
+                                            <% if (order.status==='Cancelled' ) { %>
+                                                <span class="text-danger">
+                                                    Cancelled
+                                                </span>
+                                                <% } else if (order.status==='delivered' ) { %>
+                                                    <span class="text-success">
+                                                        completed
+                                                    </span>
+                                                    <% } else if (order.status==='pending' ) { %>
+
+                                                        <span class="text-info">
+                                                            ongoing
+                                                        </span>
+                                                        <% } else if (order.status==='returned' ) { %>
+                                                            <button class="btn btn-outline-warning"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#approve">approve</button>
+                                                            <% } else if (order.status==='returnApproved' ) { %>
+                                                                <span style="color: #ff69b4;">
+                                                                    return approved
+                                                                </span>
+                                                                <% } else if (order.status==='returnRejected' ) { %>
+                                                                    <span style="color: red;">
+                                                                        return rejected
+                                                                    </span>
+                                                                    <% } %>
+
+                                        </td>
+                                </tr>
+                                <% }); %>
+                                    <% }); %>
+                        </tbody>
+                    </table>
+
+                </div>
+            </section><br>
+
+
+            <!-- Pagination Section -->
+            <!-- Pagination Section -->
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <% if (currentPage> 1) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="/admin/orders?userID=<%= userID %>&page=<%= currentPage - 1 %>"
+                                aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <% } %>
+
+                            <% const maxPagesToShow=5; // Set the maximum number of pages to display %>
+                                <% const startPage=Math.max(1, currentPage - Math.floor(maxPagesToShow / 2)); %>
+                                    <% const endPage=Math.min(totalPages, startPage + maxPagesToShow - 1); %>
+
+                                        <% if (startPage> 1) { %>
+                                            <li class="page-item disabled">
+                                                <span class="page-link">...</span>
+                                            </li>
+                                            <% } %>
+
+                                                <% for (let i=startPage; i <=endPage; i++) { %>
+                                                    <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                                                        <a class="page-link"
+                                                            href="/admin/orders?userID=<%= userID %>&page=<%= i %>">
+                                                            <%= i %>
+                                                        </a>
+                                                    </li>
+                                                    <% } %>
+
+                                                        <% if (endPage < totalPages) { %>
+                                                            <li class="page-item disabled">
+                                                                <span class="page-link">...</span>
+                                                            </li>
+                                                            <% } %>
+
+                                                                <% if (currentPage < totalPages) { %>
+                                                                    <li class="page-item">
+                                                                        <a class="page-link"
+                                                                            href="/admin/orders?userID=<%= userID %>&page=<%= currentPage + 1 %>"
+                                                                            aria-label="Next">
+                                                                            <span aria-hidden="true">&raquo;</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <% } %>
+                </ul>
+            </nav>
+
+
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+    <% orders.forEach((order,orderIndex)=> { %>
+        <% order.items.forEach((item,itemIndex)=> { %>
+            <!-- view products modal box -->
+            <section>
+                <div class="modal fade" tabindex="-1" role="dialog" id="mailModal2_<%= orderIndex %>_<%= itemIndex %>">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content borer-top border-warning">
+                            <div class="modal-body text-center">
+                                <div class="mt-2 py-2">
+                                    <h4 class="h5">view products</h4>
+                                </div>
+
+                                <div class=" card" style="width: 18rem;">
+                                    <img class="card-img-top" src="
+                                        /images/productImages/<%=item.product.variants[0].images[0] %>"
+                                        alt="Product Image">
+                                    <div class="card-body">
+                                        <p class="card-text">name:<b>
+                                                <%=item.product.name %>
+                                            </b>/
+                                            quantity:<b>
+                                                <%=item.quantity %>
+                                            </b><br>
+                                            price:<b>
+                                                <%=item.price %>
+                                            </b><br>
+                                            <!-- <a href="/home/product/details/<%= item.product._id %>"
+                                                class="btn btn-outline-primary">view
+                                                details</a> -->
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <% }); %>
+                <% }); %>
+
+
+                    <!-- model for approve -->
+                    <div class="modal fade" id="approve" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">return order details</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <!-- views/orders.ejs -->
+
+                                    <!-- Find return data for the specific order -->
+                                    <% returnData.forEach(returnItem=> { %>
+                                        <form action="/admin/approve-returnOrder" method="post">
+                                            <div class="mb-3">
+                                                <label for="orderNumber_<%= orders._id %>" class="col-form-label">Order
+                                                    Number:</label>
+                                                <input type="text" class="form-control"
+                                                    id="orderNumber_<%= orders._id %>" name="orderNumber"
+                                                    value="<%= returnItem.orderNumber %>" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="returnReason_<%= orders._id %>"
+                                                    class="col-form-label">Reason for Return:</label>
+                                                <textarea class="form-control" id="returnReason_<%= orders._id %>"
+                                                    name="returnReason"
+                                                    readonly><%= returnItem.returnReason %></textarea>
+                                            </div>
+                                            <div class="mb-2">
+                                                <label for="returnOptions_<%= orders._id %>"
+                                                    class="col-form-label">Return Option:</label>
+                                                <input type="text" class="form-control"
+                                                    id="returnOptions_<%= orders._id %>" name="returnOptions"
+                                                    value="<%= returnItem.returnOptions %>" readonly>
+                                            </div>
+                                            <input type="hidden" name="userID" value="<%= userID %>">
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button> -->
+                                    <button type="submit" name="action" value="approve"
+                                        class="btn btn-primary">Approve</button>
+                                    <button type="submit" name="action" value="reject"
+                                        class="btn btn-danger">Reject</button>
+                                    </form>
+                                    <% }) %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <script>
+
+                        // Example JavaScript function to remove item from cart
+                        function removeOrder(order_id) {
+
+                            fetch(' /removeOrder', {
+                                method: 'POST', headers: {
+                                    'Content-Type': 'application/json',
+                                }, body: JSON.stringify({ order_id, }),
+                            }) // .then(response=>
+                            response.json()
+                                .then(data => {
+                                    // Handle the response if needed
+                                    console.log('Received response:', data);
+                                    // Optionally, update the UI to reflect the removal
+                                    if (data.success) {
+                                        // Update the UI to remove the item from the cart
+                                        const cartItemElement = document.getElementById(`cart - item -
+                                                ${order_id}`);
+                                        if (cartItemElement) {
+                                            cartItemElement.remove();
+                                            console.log('order removed');
+                                        }
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    // Handle errors if needed
+                                });
+                        }
+                    </script>
+
+                    <script>
+                        function saveOrderStatus(order_id, userID) {
+                            const statusSelect = document.getElementById(`status_${order_id}`);
+                            const selectedStatus = statusSelect.value;
+
+                            fetch(`/ orders / ${order_id}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    status: selectedStatus,
+                                    userID: userID,
+                                }),
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    // Handle the response if needed
+                                    console.log('Received response:', data);
+                                    // Optionally, update the UI to reflect the status change
+                                    if (data.success) {
+                                        console.log('Order status updated successfully');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    // Handle errors if needed
+                                });
+                        }
+                    </script>
+
+
+
+                    <footer>
+                        <!-- place footer here -->
+                    </footer>
+                    <!-- Bootstrap JavaScript Libraries -->
+                    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+                        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+                        crossorigin="anonymous"></script>
+
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+                        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+                        crossorigin="anonymous"></script>
+</body>
+
+</html>

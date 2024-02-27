@@ -1,0 +1,134 @@
+<link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Mukta:wght@800&family=Noto+Sans&family=Nunito:ital,wght@0,300;0,600;1,200&family=Ruwudu&display=swap"
+    rel="stylesheet">
+
+<style>
+    .navbar-brand {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 25px;
+        font-weight: bold;
+        color: #333;
+        /* Set your desired color */
+        text-decoration: none;
+        /* Remove underline */
+    }
+</style>
+
+<!-- new navbar style -->
+<style>
+    .navbar-brand {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 25px;
+        font-weight: bold;
+        color: #333;
+        text-decoration: none;
+        margin-left: 1rem;
+    }
+
+    .nav-link {
+        color: #212121 !important;
+        font-weight: 500;
+        transition: all 200ms linear;
+    }
+
+    .nav-item:hover .nav-link {
+        color: rgb(123, 163, 239) !important;
+    }
+
+    .nav-item.active .nav-link {
+        color: #777 !important;
+    }
+
+    .nav-link {
+        position: relative;
+        padding: 5px 15px !important;
+        /* Added padding to create space between nav-items */
+        display: inline-block;
+    }
+
+    .nav-item:after {
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        content: '';
+        /* background-color: #8167a9; */
+        background-color: rgb(123, 163, 239);
+        opacity: 0;
+        transition: all 200ms linear;
+    }
+
+    .nav-item:hover:after {
+        bottom: 0;
+        opacity: 1;
+    }
+
+    .nav-item.active:hover:after {
+        opacity: 0;
+    }
+
+    .nav-item {
+        position: relative;
+        transition: all 200ms linear;
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
+    <div class="container">
+        <a class="navbar-brand" href="#">Shopsphere</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/admin/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <!-- <a class="nav-link" href="#">Orders</a> -->
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/Products">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/Customers">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/Category">Category</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/orderHistory">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/coupons">coupons</a>
+                </li>
+
+                <!-- <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/logout"
+                        style="color: #dc1212; text-decoration: none; transition: color 0.3s ease;"
+                        onmouseover="this.style.color='#d15023'" onmouseout="this.style.color='#333'">Log out</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>

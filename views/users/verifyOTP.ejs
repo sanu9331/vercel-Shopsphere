@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>User verify otp</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="/css/verifyOTP.css" />
+</head>
+
+<body>
+    <header>
+        <!-- place navbar here -->
+        <!-- Image and text -->
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+                <img src="/docs/4.3/assets/brand/bootstrap-solid.svg" width="30" height="30"
+                    class="d-inline-block align-top" alt="">
+                Shopsphere
+            </a>
+        </nav>
+    </header>
+    <main class="otp-box">
+        <div class="d-flex justify-content-center align-items-center continer">
+            <div class="card py-5 px-3">
+                <h5 class="m-0">User Email OTP verification</h5>
+                <span class="text-success"><b>Enter the code we just sent on your email</b> </span>
+                <% if (typeof message !=='undefined' ) { %>
+                    <p>
+                        <%= message %>
+                    </p>
+                    <% } else if (typeof error !=='undefined' ) { %>
+                        <p class="text-danger">
+                            <%= error %>
+                        </p>
+                        <% } %>
+
+
+                            <form action="" method="post">
+                                <div class="d-flex flex-row mt-5">
+                                    <input type="number" name="otp" class="form-control " autofocus="" />
+                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                </div>
+                            </form>
+
+                            <div class="text-center mt-5">
+                                <span class="d-block mobile-text" id="countdown"></span>
+                                <span class="d-block mobile-text" id="resend"></span>
+                                <!-- <button class="d-block mobile-text" id="resend">resend</button> -->
+                            </div>
+            </div>
+        </div>
+    </main>
+    <!-- <script src="js/OTPCountdown.js"></script> -->
+
+
+    <script>
+        let timerOn = true;
+
+        function timer(remaining) {
+            var m = Math.floor(remaining / 60);
+            var s = remaining % 60;
+            m = m < 10 ? "0" + m : m;
+            s = s < 10 ? "0" + s : s;
+            document.getElementById("countdown").innerHTML = `Time left: ${m}:${s}`;
+            remaining -= 1;
+
+            if (remaining >= 0 && timerOn) {
+                setTimeout(function () {
+                    timer(remaining);
+                }, 1000);
+                document.getElementById("resend").innerHTML = "";
+                return;
+            }
+
+            if (!timerOn) {
+                return;
+            }
+            document.getElementById("resend").innerHTML = `Don't receive the code? 
+                <span class="font-weight-bold text-color cursor" onclick="handleResend()">Resend</span>`;
+        }
+
+        function handleResend() {
+            resendOTP();
+            timer(10);
+        }
+
+        function resendOTP() {
+            // Add logic to resend the OTP here
+            fetch("/verify", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data.message); // Log the response from the server
+                    // Optionally update the UI or show a message to the user
+                })
+                .catch((error) => {
+                    console.error("Error resending OTP:", error);
+                });
+        }
+
+        timer(10);
+    </script>
+
+
+
+    <footer>
+        <!-- place footer here -->
+        <%- include('../layouts/footer.ejs') %>
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

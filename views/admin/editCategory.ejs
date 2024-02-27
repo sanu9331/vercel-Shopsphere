@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>edit category
+    </title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+</head>
+
+<body>
+    <header>
+        <!-- place navbar here -->
+        <%- include('../layouts/adminHeader.ejs') %>
+    </header>
+    <main>
+
+        <div class="container mt-4">
+            <div class="row d-flex justify-content-end  ">
+                <div class=" col-md-10 col-lg-10 ">
+                    <div class="d-flex justify-content-between">
+                        <h2>Edit Category</h2>
+                    </div>
+                    <form method="post" action="/admin/category/edit/<%=CategoryData._id %>"
+                        onsubmit="return validateCategoryForm()" enctype="multipart/form-data">
+                        <!-- Name input -->
+
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="name">Category</label>
+
+                            <!-- <select class="select form-control" id="name" name="name" required>
+                                <% categorys.forEach(category=> { %>
+                                    <option value="<%=category.category%>">
+
+                                        <%=category.category%>
+                                    </option>
+
+                                    <% })%>
+                            </select> -->
+
+                            <input type="text" class="form-control" id="name" name="name"
+                                value="<%= CategoryData.category %>" required>
+
+                            <div id=" nameWarning" class="text-danger">
+                            </div>
+                        </div>
+
+
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="SubCategory">Sub Category</label>
+                            <input type="text" class="form-control" id="sub_Category" name="sub_Category"
+                                value="<%= CategoryData.sub_Category %>" required>
+                            <!-- <select class="select form-control" id="SubCategory" name="SubCategory" required>
+                                <%categorys.forEach(category=>{%>
+                                    <option value="<%=category.sub_Category%>">
+                                        <%=category.sub_Category%>
+                                    </option>
+                                    <% })%>
+                            </select> -->
+
+                            <div id="SubCategoryWarning" class="text-danger"></div>
+                        </div>
+
+
+                        <label for="form4Example1">Previous Image</label>
+                        <img width="100" height="100" src="/images/categoryImages/<%=CategoryData.image %>" id="imgView"
+                            name="previousImage" class="" />
+                        <div id="SubCategoryWarning" class="text-danger"></div>
+                        <div class="form-outline mb-4">
+                            <label for="image">Image</label>
+                            <input type="file" class="form-control" id="image" name="image" onchange="viewImage(event)">
+                            <div id="imageWarning" class="text-danger"></div>
+                        </div>
+
+                        <!-- Message input -->
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="form4Example3">Description</label>
+                            <textarea class="form-control" name="description" id="form4Example5"
+                                rows="4"><%=CategoryData.description %></textarea>
+                            <div id="descriptionWarning" class="text-danger"></div>
+                        </div>
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary shadow mb-5 rounded mb-4">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        function validateCategoryForm() {
+            console.log('validateCategoryForm function called');
+            var name = document.getElementById('name').value;
+            var description = document.getElementById('description').value;
+            var sub_Category = document.getElementById('sub_Category').value;
+
+            // Reset the warning
+            document.getElementById('nameWarning').innerText = '';
+            document.getElementById('descriptionWarning').innerText = '';
+            document.getElementById('SubCategoryWarning').innerText = '';
+
+            // Validate name with no leading or trailing whitespaces
+            if (!name.trim() || /\s/.test(name)) {
+                document.getElementById('nameWarning').innerText = 'Name should not be empty or contain trailing white spaces.';
+                return false;
+            }
+
+            if (!sub_Category.trim() || /\s/.test(sub_Category)) {
+                document.getElementById('SubCategoryWarning').innerText = 'Sub Category should not be empty or contain trailing white spaces.';
+                return false;
+            }
+
+            // Validate description with more than 10 words
+            var wordCount = description.trim().split(/\s+/).length;
+            if (wordCount < 10) {
+                document.getElementById('descriptionWarning').innerText = 'Description should contain at least 10 words.';
+                return false;
+            }
+
+            // Form is valid
+            return true;
+        }
+    </script>
+
+    <script>
+        function viewImage(event) {
+            document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+        }
+    </script>
+
+    <footer>
+        <!-- place footer here -->
+        <%- include('../layouts/adminFooter.ejs') %>
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

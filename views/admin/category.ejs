@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>category</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+    <header>
+        <!-- place navbar here -->
+        <%- include('../layouts/adminHeader.ejs') %>
+    </header>
+    <main>
+
+        <div class="container mt-4">
+
+            <div class="row d-inline-flex align-items-center justify-content-center  ">
+                <div class=" col-md-10 col-lg-10 ">
+
+
+                    <div class="d-flex justify-content-between">
+                        <h1 class="text-bg-info  rounded"
+                            style="font-size: 30px; width: 230px; text-align: center;  font-family:Arial, Helvetica, sans-serif;">
+                            Category List</h1>
+
+
+                        <form id="searchForm" method="GET" action="/admin/Category">
+                            <div class="input-group" style="width: 14rem; margin-left: 23rem;">
+                                <input type="search" name="search" class="form-control rounded" placeholder="Search"
+                                    aria-label="Search" aria-describedby="search-addon" />
+                                <button type="submit" class="btn btn-success" data-mdb-ripple-init>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem"
+                                        fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path
+                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+
+                        <button class="btn btn-success mb-2" data-bs-toggle="modal"
+                            data-bs-target="#addCategoryModal">Add
+                            Category <b>/</b> Subcategory</button>
+
+                    </div>
+
+
+
+                    <% if (CategoryData.length===0) { %>
+                        <div class="alert alert-warning" role="alert">
+                            No products found
+                        </div>
+                        <% } else { %>
+                            <!-- <div class="overflow-auto p-3 bg-light" style="max-width: 1500px; max-height: 600px;"> -->
+                            <table class="table">
+                                <thead class="text-center table-dark">
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Sub Category</th>
+                                        <th>Description</th>
+                                        <th>Actions</th>
+                                        <th>image</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="align-center">
+                                    <% CategoryData.forEach(function(category) { %>
+                                        <tr class="text-center">
+                                            <td>
+                                                <%= category.category %>
+                                            </td>
+                                            <td class="description-column">
+                                                <%= category.sub_Category %>
+                                            </td>
+                                            <td class="description-column">
+                                                <%= category.description %>
+                                            </td>
+                                            <td class="description-column">
+                                                <img width="50px" height="50px"
+                                                    src="/images/categoryImages/<%= category.image %>" alt="">
+                                            </td>
+
+                                            <td>
+                                                <a href="/admin/category/edit/<%= category._id %>"
+                                                    class="btn btn-warning">Edit</a>
+                                                <a href="javascript:void(0);"
+                                                    onclick="confirmDelete('<%= category._id %>','/admin/category/delete/','You will not be able to recover this category!')"
+                                                    class="btn btn-danger">Delete</a>
+                                            </td>
+
+                                        </tr>
+                                        <% }); %>
+                                </tbody>
+                            </table>
+
+
+                            <% } %>
+                                <!-- </div> -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCategoryModalLabel">Add Category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="/admin/category/add" onsubmit="return validateCategoryForm()"
+                        enctype="multipart/form-data">
+                        <!-- <div class=" form-group">
+                                <label for="name">Category Name</label>
+                                <select class="select form-control" id="name" name="name" required>
+                                    <option value="">Select</option>
+                                    <option value="Laptops">Laptops</option>
+                                    <option value="Mobiles">Mobiles</option>
+                                    <option value="Headphones">Headphones</option>
+                                    <option value="SmartWatches">SmartWatches</option>
+                                    <option value="Cameras">Cameras</option>
+                            </select>
+                            <div id="nameWarning" class="text-danger"></div>
+                    </div> -->
+                        <div class="form-group">
+                            <label for="name">Category name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Sub-Category name</label>
+                            <input type="text" class="form-control" id="SubCategory" name="SubCategory" required>
+                        </div>
+                        <!-- <div class="form-group">
+                                <label for="SubCategory">Sub-Category Name</label>
+                                <select class="select form-control" id="SubCategory" name="SubCategory" required>
+                                    <option value="">Select</option>
+                                    <option value="Gaming">Gaming</option>
+                                    <option value="Ultrabooks">Ultrabooks</option>
+                                    <option value="Fitness Trackers">Fitness Trackers </option>
+                                    <option value="Fashionable Smartwatches">Fashionable Smartwatches</option>
+                                    <option value="Flagship Phones">Flagship Phones</option>
+                                    <option value="Budget-friendly Phones">Budget-friendly Phones</option>
+                                    <option value="Over-Ear Headphones ">Over-Ear Headphones </option>
+                                    <option value="True Wireless Earbuds">True Wireless Earbuds</option>
+                                    <option value="DSLR Cameras">DSLR Cameras</option>
+
+
+                                </select>
+                                <div id="SubCategoryWarning" class="text-danger"></div>
+                            </div> -->
+                        <div class="form-group">
+                            <label for="image">Image</label>
+                            <input type="file" class="form-control" id="image" name="image">
+                            <div id="imageWarning" class="text-danger"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" name="description" required></textarea>
+                            <div id="descriptionWarning" class="text-danger"></div>
+                        </div><br>
+                        <button type="submit" class="btn btn-success">Add Category</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Pagination Section -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <% if (currentPage> 1) { %>
+                <li class="page-item">
+                    <a class="page-link" href="/admin/Category?page=<%= currentPage - 1 %>" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <% } %>
+
+                    <% const maxPagesToShow=5; // Set the maximum number of pages to display %>
+                        <% const startPage=Math.max(1, currentPage - Math.floor(maxPagesToShow / 2)); %>
+                            <% const endPage=Math.min(totalPages, startPage + maxPagesToShow - 1); %>
+
+                                <% if (startPage> 1) { %>
+                                    <li class="page-item disabled">
+                                        <span class="page-link">...</span>
+                                    </li>
+                                    <% } %>
+
+                                        <% for (let i=startPage; i <=endPage; i++) { %>
+                                            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                                                <a class="page-link" href="/admin/Category?page=<%= i %>">
+                                                    <%= i %>
+                                                </a>
+                                            </li>
+                                            <% } %>
+
+                                                <% if (endPage < totalPages) { %>
+                                                    <li class="page-item disabled">
+                                                        <span class="page-link">...</span>
+                                                    </li>
+                                                    <% } %>
+
+                                                        <% if (currentPage < totalPages) { %>
+                                                            <li class="page-item">
+                                                                <a class="page-link"
+                                                                    href="/admin/Category?page=<%= currentPage + 1 %>"
+                                                                    aria-label="Next">
+                                                                    <span aria-hidden="true">&raquo;</span>
+                                                                </a>
+                                                            </li>
+                                                            <% } %>
+        </ul>
+    </nav>
+
+
+
+
+    <script>
+        function validateCategoryForm() {
+            var name = document.getElementById('name').value;
+            var description = document.getElementById('description').value;
+            var sub_Category = document.getElementById('SubCategory').value;
+
+            // Reset all warnings
+            document.getElementById('nameWarning').innerText = '';
+            document.getElementById('descriptionWarning').innerText = '';
+            document.getElementById('SubCategoryWarning').innerText = '';
+
+            // Validate name with no white spaces
+            if (!name.trim()) {
+                document.getElementById('nameWarning').innerText = 'Name should not be empty.';
+                return false;
+            }
+
+            // Validate sub_Category with no white spaces
+            if (!sub_Category.trim()) {
+                document.getElementById('SubCategoryWarning').innerText = 'Sub Category should not be empty.';
+                return false;
+            }
+
+            // Validate description with more than 10 words
+            var wordCount = description.trim().split(/\s+/).length;
+            if (wordCount < 10) {
+                document.getElementById('descriptionWarning').innerText = 'Description should contain at least 10 words.';
+                return false;
+            }
+
+            // Form is valid
+            return true;
+        }
+
+        //delete operation
+        function confirmDelete(categoryId) {
+            // Use a confirmation dialog
+            if (confirm('Are you sure you want to delete this category?')) {
+                // If the user confirms, redirect to the delete route
+                window.location.href = '/admin/category/delete/' + categoryId;
+            }
+        }
+    </script>
+
+
+
+    <footer style="margin-top: 6rem;">
+        <!-- place footer here -->
+        <%- include('../layouts/adminFooter.ejs') %>
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

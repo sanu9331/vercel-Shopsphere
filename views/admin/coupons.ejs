@@ -1,0 +1,154 @@
+<!-- views/coupons.ejs -->
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Coupons</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+</head>
+
+<body>
+    <header>
+        <!-- place navbar here -->
+        <%- include('../layouts/adminHeader.ejs') %>
+
+    </header>
+    <main>
+        <% if (messages.error) { %>
+            <div class="alert alert-danger">
+                <%= messages.error %>
+                    <button type="button" class="close" aria-label="Close" onclick="closeFlashMessage()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <% } else if (messages.success) { %>
+                <div class="alert alert-success">
+                    <%= messages.success %>
+                        <button type="button" class="close" aria-label="Close" onclick="closeFlashMessage()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <% } %>
+
+
+                    <div class="container mt-5">
+                        <h1 class="text-bg-info rounded"
+                            style="font-size: 30px; width: 15rem; text-align: center; font-family: Arial, Helvetica, sans-serif;margin-bottom: 1rem;">
+                            coupon list</h1>
+                        <div class="row">
+                            <!-- Add Coupon Container -->
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header"
+                                        style="font-size: 18px; background-color: rgba(0, 0, 0, 0.836);  font-weight: 500;color: whitesmoke;">
+                                        Add Coupon
+                                    </div>
+                                    <div class="card-body">
+                                        <form action="/admin/coupons/add" method="post">
+                                            <div class="form-group">
+                                                <label for="couponCode">Coupon Code</label>
+                                                <input type="text" class="form-control" name="couponCode"
+                                                    placeholder="Enter coupon code" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="number">percentage</label>
+                                                <input type="number" class="form-control" id="discountPercentage"
+                                                    name="discountPercentage" min="0" max="100" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="expiryDate">Expiry Date</label>
+                                                <input type="date" class="form-control" name="expiryDate" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="minAmount">Minimum Amount</label>
+                                                <input type="number" class="form-control" name="minOrderAmount"
+                                                    placeholder="Enter min amount" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="status">Status</label>
+                                                <select class="form-control" name="status" required>
+                                                    <option value="true">true</option>
+                                                    <option value="false">false</option>
+                                                </select>
+                                            </div><br>
+                                            <!-- <button type="submit" class="btn btn-primary">Add
+                                                Coupon</button> -->
+                                            <div class="text-end">
+                                                <!-- Wrap the button in a div with class "text-end" -->
+                                                <button type="submit" class="btn btn-primary">Add Coupon</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Coupon List Container -->
+                            <!-- Coupon List Container -->
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header"
+                                        style="font-size: 16px; background-color: rgba(0, 0, 0, 0.752); font-weight: 500; color: whitesmoke; ">
+                                        Coupon List
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <% coupons.forEach(coupon=> { %>
+                                            <li class="list-group-item">
+                                                <strong>Coupon Code:</strong>
+                                                <%= coupon.code %> |
+                                                    <strong>Expiry Date:</strong>
+                                                    <%= coupon.expiry.toISOString().split('T')[0] %> |
+                                                        <strong>Min Amount:</strong> $<%= coupon.minOrderAmount %> |
+                                                            <strong>Status:</strong>
+                                                            <span
+                                                                style="color: <%= coupon.isActive ? 'green' : 'red' %>;">
+                                                                <%= coupon.isActive ? 'Active' : 'Expired' %>
+                                                            </span>
+                                                            <a href="/admin/coupons-delete/<%= coupon._id %>"
+                                                                class="btn btn-danger btn-sm float-end">delete</a>
+
+                                            </li>
+                                            <% }) %>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+    </main>
+
+    <script>
+        function closeFlashMessage() {
+            const flashMessage = document.querySelector('.alert.alert-danger, .alert.alert-success');
+            if (flashMessage) {
+                flashMessage.remove();
+            }
+        }
+    </script>
+
+    <footer>
+        <!-- place footer here -->
+        <!-- Your footer code goes here -->
+    </footer>
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
