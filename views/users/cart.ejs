@@ -2,8 +2,6 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cart</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -12,8 +10,16 @@
     <!-- Bootstrap CSS v5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-
 </head>
+<style>
+    /* Targeting the button containing the SVG */
+    button[type="submit"]:hover {
+        background-color: red;
+        /* Change to the desired red color */
+    }
+</style>
+
+
 
 <body>
     <header>
@@ -37,238 +43,112 @@
                 </div>
                 <% } %>
 
-
-                    <section class="h-100 h-custom" style="background-color: #eee;">
-                        <div class="container py-5 h-100">
-                            <div class="row d-flex justify-content-center align-items-center h-100">
-                                <div class="col">
-                                    <div class="card">
-                                        <div class="card-body p-4">
-
-                                            <div class="row">
-
-                                                <div class="col-lg-7">
-                                                    <h5 class="mb-3"><a href="/home" class="text-body"><i
-                                                                class="fas fa-long-arrow-alt-left me-2"></i>Continue
-                                                            shopping</a>
-                                                    </h5>
-                                                    <hr>
-
-                                                    <div class="d-flex justify-content-between align-items-center mb-4">
-                                                        <div>
-                                                            <p class="mb-1">Shopping cart</p>
-                                                            <p class="mb-0">You have <%= totalCartItems %> items in your
-                                                                    cart</p>
-                                                        </div>
-                                                        <!-- <div>
-                                                            <p class="mb-0"><span class="text-muted">Sort by:</span> <a
-                                                                    href="#!" class="text-body">price <i
-                                                                        class="fas fa-angle-down mt-1"></i></a></p>
-                                                        </div> -->
-                                                    </div>
-
-
-
-
-
-
-
-                                                    <div class="container mt-5" style="width: 80vw;">
-                                                        <h1>Your Cart</h1>
-                                                        <div class="card mb-3">
-                                                            <div class="card-body">
-                                                                <table class="table">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th scope="col">Products</th>
-                                                                            <!-- <th scope="col">Product Name</th> -->
-                                                                            <th scope="col">Quantity</th>
-                                                                            <th scope="col">Price</th>
-                                                                            <th scope="col">Actions</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-
-
-                                                                        <% cartItems.forEach(item=> { %>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <div
-                                                                                        class="d-flex flex-row align-items-center">
-                                                                                        <div
-                                                                                            style="margin-right: 10px;">
-                                                                                            <img src="<%= item.imageURL %>"
-                                                                                                class="img-fluid rounded-3"
-                                                                                                alt="Shopping item"
-                                                                                                style="width: 85px;">
-
-                                                                                            <!-- <% if
-                                                                                                (item.imageURL.startsWith('data:image/'))
-                                                                                                { %>
-                                                                                                <%
-                                                                                                    item.imageURL.split(',').forEach(image=>
-                                                                                                    { %>
-                                                                                                    <img class="img-fluid rounded-3"
-                                                                                                        alt="Shopping item"
-                                                                                                        style="width: 85px;"
-                                                                                                        src="<%= item.imageURL %>">
-                                                                                                    <% }); %>
-                                                                                                        <% } else { %>
-                                                                                                            <img src="<%= item.imageURL %>"
-                                                                                                                class="img-fluid rounded-3"
-                                                                                                                alt="Shopping item"
-                                                                                                                style="width: 85px;">
-                                                                                                            <% } %> -->
-
-
-                                                                                        </div>
-                                                                                        <div class="ms-3">
-                                                                                            <h5>
-                                                                                                <%= item.name %>
-                                                                                            </h5>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </td>
-
-                                                                                <td class="align-middle mt-0">
-                                                                                    <div style="width: 50px;"
-                                                                                        class="d-flex align-items-center">
-                                                                                        <button
-                                                                                            class="btn btn-sm btn-outline-secondary"
-                                                                                            onclick="updateQuantity('<%= item.product_id %>', -1)">-</button>
-                                                                                        <h5 class="fw-normal mb-0 mx-2"
-                                                                                            id="quantity_<%= item.product_id %>">
-                                                                                            <%= item.quantity %>
-                                                                                        </h5>
-                                                                                        <button
-                                                                                            class="btn btn-sm btn-outline-secondary"
-                                                                                            onclick="updateQuantity('<%= item.product_id %>', 1)">+</button>
-                                                                                    </div>
-                                                                                </td>
-
-
-
-
-                                                                                <td class="align-middle mt-0">
-                                                                                    <div style="width: 83px;">
-                                                                                        <h5 class="mb-0"
-                                                                                            style="white-space: nowrap;">
-                                                                                            Rs:<%=
-                                                                                                item.discountedPrice%>
-                                                                                        </h5>
-                                                                                    </div>
-
-
-
-                                                                                </td>
-
-                                                                                <td>
-
-                                                                                    <form action="/remove-from-cart"
-                                                                                        method="post">
-                                                                                        <input type="hidden"
-                                                                                            name="product_id"
-                                                                                            value="<%= item.product_id %>" />
-                                                                                        <button type="submit"
-                                                                                            class="btn btn-primary">Remove</button>
-                                                                                    </form>
-                                                                                </td>
-                                                                            </tr>
-
-                                                                            <% }); %>
-                                                                    </tbody>
-                                                                </table>
+                    <section class="pt-5 pb-5">
+                        <div class="container">
+                            <div class="row w-100">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <h3 class="display-5 mb-2 text-start">Shopping Cart</h3>
+                                    <p class="mb-5 text-start">
+                                        <i class="text-info font-weight-bold">
+                                            <%= totalCartItems %>
+                                        </i> items in your cart
+                                    </p>
+                                    <table id="shoppingCart" class="table table-condensed table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:60%">Product</th>
+                                                <th style="width:12%">Price</th>
+                                                <th style="width:10%">Quantity</th>
+                                                <th style="width:16%"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% cartItems.forEach(item=> { %>
+                                                <tr>
+                                                    <td data-th="Product">
+                                                        <div class="row">
+                                                            <div class="col-md-3 text-left">
+                                                                <img src="<%= item.imageURL %>" alt=""
+                                                                    class="img-fluid d-none d-md-block rounded mb-2 shadow ">
+                                                            </div>
+                                                            <div class="col-md-9 text-left mt-sm-2">
+                                                                <h4>
+                                                                    <h4>
+                                                                        <%= item.name %>
+                                                                    </h4>
+                                                                    <p class="font-weight-light">Brand &amp; Name</p>
                                                             </div>
                                                         </div>
-                                                        <% if(typeof message !=='undefined' ) { %>
-                                                            <p style="color: rgb(240, 23, 12);">
-                                                                <%= message %>
-                                                            </p>
-                                                            <% } %>
+                                                    </td>
+                                                    <td data-th="Price"> Rs:<%= item.discountedPrice%>
+                                                    </td>
+                                                    <td data-th="Quantity">
+                                                        <!-- <input type="number" class="form-control form-control-lg text-center"
+                                                value="1"> -->
+                                                        <div style="width: 50px;" class="d-flex align-items-center">
+                                                            <button class="btn btn-sm btn-outline-secondary"
+                                                                onclick="updateQuantity('<%= item.product_id %>', -1)">-</button>
+                                                            <h5 class="fw-normal mb-0 mx-2"
+                                                                id="quantity_<%= item.product_id %>">
+                                                                <%= item.quantity %>
+                                                            </h5>
+                                                            <button class="btn btn-sm btn-outline-secondary"
+                                                                onclick="updateQuantity('<%= item.product_id %>', 1)">+</button>
+                                                        </div>
+                                                    </td>
+                                                    <td class="actions" data-th="">
+                                                        <div class="text-right">
+                                                            <!-- <button class="btn btn-white border-secondary bg-white btn-md mb-2">
+                                                    <i class="fas fa-sync"></i>
+                                                </button> -->
 
-                                                                <div class="row justify-content-end mt-3">
-                                                                    <div class="col-auto">
-                                                                        <!-- <span style="font-family: system-ui;">total price:</span> -->
-                                                                        <span
-                                                                            style="font-family: system-ui; font-weight: bold; color: #868c93;">Total
-                                                                            Price: </span>
-                                                                        <span
-                                                                            style="font-weight: bold; margin-right: 5rem;"
-                                                                            id="realTotalPrice">
-
-                                                                            Rs.<%= realTotalPrice %>
-                                                                        </span>
-                                                                        <a href="/checkout"
-                                                                            class="btn btn-warning btn-lg"
-                                                                            style="margin-right: 40px;">
-                                                                            Place Order
-                                                                        </a>
-
-
-
-                                                                    </div>
-                                                                </div>
-                                                    </div>
+                                                            <form action="/remove-from-cart" method="post">
+                                                                <input type="hidden" name="product_id"
+                                                                    value="<%= item.product_id %>" />
+                                                                <button type="submit"
+                                                                    class="btn btn-white border-secondary  btn-md mb-2">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                        height="16" fill="currentColor"
+                                                                        class="bi bi-trash" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                                        <path
+                                                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                                                    </svg>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <% }); %>
 
 
+                                        </tbody>
+                                    </table>
 
 
-
-
-                                                </div>
-
-
-                                            </div>
-
-                                        </div>
-
+                                    <div class="float-right text-end">
+                                        <h4>Total:</h4>
+                                        <h1>Rs.<%= realTotalPrice %>
+                                        </h1>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4 d-flex align-items-center">
+                                <div class="col-sm-6 order-md-2 text-end">
+                                    <a href="/checkout" class="btn btn-success mb-4 btn-lg pl-5 pr-5">Place order</a>
+                                </div>
+                                <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
+                                    <a href="catalog.html">
+                                        <i class="fas fa-arrow-left mr-2"></i> Continue Shopping</a>
                                 </div>
                             </div>
                         </div>
                     </section>
-
     </main>
-
-
-
-
-    <!-- <script>
-
-        // Example JavaScript function to remove item from cart
-        function removeFromCart(product_id) {
-
-            fetch('/remove-from-cart', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    product_id,
-                }),
-            })
-                // .then(response => response.json())
-                .then(data => {
-                    // Handle the response if needed
-                    console.log('Received response:', data);
-                    // Optionally, update the UI to reflect the removal
-                    if (data.success) {
-                        // Update the UI to remove the item from the cart
-                        const cartItemElement = document.getElementById(`cart-item-${product_id}`);
-                        if (cartItemElement) {
-                            cartItemElement.remove();
-                            console.log('Product removed');
-
-                        }
-
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // Handle errors if needed
-                });
-        }
-    </script> -->
+    <footer>
+        <!-- place footer here -->
+    </footer>
 
     <script>
         function closeFlashMessage() {
@@ -284,25 +164,18 @@
             const quantityElement = document.getElementById(`quantity_${product_id}`);
             let newQuantity = parseInt(quantityElement.innerText) + change;
 
-            // Ensure the quantity doesn't go below 1
+
             newQuantity = Math.max(1, newQuantity);
 
-            // Update the quantity display
+
             quantityElement.innerText = newQuantity;
 
-            // You can also send an AJAX request to update the quantity on the server
+
             fetch(`/update-quantity?product_id=${product_id}&quantity=${newQuantity}`, { method: 'POST' });
             location.reload()
         }
     </script>
 
-
-
-
-    <footer>
-        <!-- place footer here -->
-        <%- include('../layouts/Footer.ejs') %>
-    </footer>
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

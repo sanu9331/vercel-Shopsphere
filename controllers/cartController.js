@@ -75,7 +75,7 @@ const buyNow = async (req, res) => {
 
 const addToCart = async (req, res) => {
     try {
-        const { product_id, price, quantity, imageURL } = req.body;
+        const { product_id, price, quantity, imageURL, discountedPrice } = req.body;
         // const id = req.params.id;
         // const ProductData = await Product.findById({ _id: id });
         console.log('request body:', req.body);
@@ -98,9 +98,10 @@ const addToCart = async (req, res) => {
             const cart_obj = new Cart({
                 product_id: req.body.product_id,
                 name: req.body.name,
-                price: req.body.price,
+                price: price,
                 quantity: quantity,
                 imageURL: imageURL,
+                discountedPrice: discountedPrice
             });
             await cart_obj.save();
             console.log('cart_obj=', cart_obj);

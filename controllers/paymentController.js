@@ -88,7 +88,7 @@ const capturePayment = async (req, res) => {
             items: populatedItems,
             orderDate: new Date(),
             quantity: quantity,
-            couponDiscountPrice: couponDiscountPrice
+            couponDiscountPrice: (couponDiscountPrice / 100).toFixed(2)
         });
 
 

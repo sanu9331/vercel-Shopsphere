@@ -20,110 +20,131 @@
         <%- include('../layouts/adminHeader.ejs') %>
     </header>
     <main>
-        <!-- <h3 style="margin-left: 10rem; margin-top: 2rem; margin-bottom: 1rem;">order history
-        </h3> -->
-        <h1 class="text-bg-info rounded"
-            style="font-size: 30px; width: 230px; text-align: center; font-family: Arial, Helvetica, sans-serif; margin-top: 4rem; margin-left: 11rem;">
-            Sales report</h1>
-        <section
-            style="background-color: #ffffff; width: 100%; margin: 0 auto; padding: 10px; border-radius: 7px; margin-bottom: 20px;">
-            <div class="container">
-                <div class="row justify-content-between align-items-center">
-                    <div class="col-md-auto" style="margin-left: 4rem;">
-                        <i>total orders found: <b>
-                                <%= orderCount %>
-                            </b></i>
-                    </div>
-
-
-
-
-
-                    <!-- Adjusted Search Form and Download Sales Report Button -->
-                    <div class="col-md-auto d-flex align-items-center">
-                        <form id="searchForm" method="GET" action="/admin/salesReport" class="me-3">
-                            <div class="input-group" style="width: 14rem;">
-                                <input type="search" name="search" class="form-control rounded" placeholder="Search"
-                                    aria-label="Search" aria-describedby="search-addon" />
-                                <button type="submit" class="btn btn-success" data-mdb-ripple-init>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem"
-                                        fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                        <path
-                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </form>
-                        <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                            data-bs-target="#salesReportModal">Download Sales Report</button>
-                    </div>
-
-                </div>
+        <% if (messages.error) { %>
+            <div class="alert alert-danger">
+                <%= messages.error %>
+                    <button type="button" class="close" aria-label="Close" onclick="closeFlashMessage()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
             </div>
+            <% } else if (messages.success) { %>
+                <div class="alert alert-success">
+                    <%= messages.success %>
+                        <button type="button" class="close" aria-label="Close" onclick="closeFlashMessage()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <% } %>
+
+                    <!-- <h3 style="margin-left: 10rem; margin-top: 2rem; margin-bottom: 1rem;">order history
+        </h3> -->
+                    <h1 class="text-bg-info rounded"
+                        style="font-size: 30px; width: 230px; text-align: center; font-family: Arial, Helvetica, sans-serif; margin-top: 4rem; margin-left: 11rem;">
+                        Sales report</h1>
+                    <section
+                        style="background-color: #ffffff; width: 100%; margin: 0 auto; padding: 10px; border-radius: 7px; margin-bottom: 20px;">
+                        <div class="container">
+                            <div class="row justify-content-between align-items-center">
+                                <div class="col-md-auto" style="margin-left: 4rem;">
+                                    <i>total orders found: <b>
+                                            <%= orderCount %>
+                                        </b></i>
+                                </div>
 
 
 
 
-            <section
-                style="background-color: #b3bbc0; width: 80%; margin: 0 auto; padding: 10px; border-radius: 7px; margin-top: 1rem;">
-                <div class="container">
-                    <!-- Content of the second container... -->
 
-                    <div class="table-wrapper">
-                        <table class="table table-centered mb-0 table-nowrap" style="background-color: white;">
-                            <thead class="text-center table-dark">
-                                <tr>
-                                    <th class="border-top-0" scope="col">Customer</th>
-                                    <th class="border-top-0" scope="col">Order Date</th>
-                                    <th class="border-top-0" scope="col">Delivery Status</th>
-                                    <th class="border-top-0" scope="col">Address</th>
-                                    <th class="border-top-0" scope="col">Payment Method</th>
-                                    <th class="border-top-0" scope="col">Total Amount</th>
-                                    <th scope="col">Product</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Order status</th>
-                                </tr>
-                            </thead>
+                                <!-- Adjusted Search Form and Download Sales Report Button -->
+                                <div class="col-md-auto d-flex align-items-center">
+                                    <form id="searchForm" method="GET" action="/admin/salesReport" class="me-3">
+                                        <div class="input-group" style="width: 14rem;">
+                                            <input type="search" name="search" class="form-control rounded"
+                                                placeholder="Search" aria-label="Search"
+                                                aria-describedby="search-addon" />
+                                            <button type="submit" class="btn btn-success" data-mdb-ripple-init>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem"
+                                                    fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </form>
+                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                        data-bs-target="#salesReportModal">Download Sales Report</button>
+                                </div>
 
-                            <tbody>
-                                <% orders.forEach(order=> { %>
-                                    <tr>
-                                        <td>
-                                            <% if (order.customer && order.customer.name) { %>
-                                                ⭐ <%= order.customer.name %>
-                                                    <% } else { %>
-                                                        No Name
-                                                        <% } %>
-                                        </td>
-                                        <td>
-                                            <%= order.orderDate.toDateString() %>
-                                        </td>
-                                        <td>
-                                            <% if (order.status==='Cancelled' ) { %>
-                                                <span class="text-danger">
-                                                    <%= order.status %>
-                                                </span>
-                                                <% } else if (order.status==='delivered' ) { %>
-                                                    <span class="text-success">
-                                                        <%= order.status %>
-                                                    </span>
-                                                    <% } else { %>
-                                                        <%= order.status %>
-                                                            <% } %>
-                                        </td>
+                            </div>
+                        </div>
 
-                                        <td style="max-width: 150px; word-wrap: break-word;">
-                                            <!-- <%= order.orderAddress %> -->
-                                            <% const orderAddressString=order.orderAddress; %>
-                                                <% if (orderAddressString) { %>
-                                                    <% const matches=orderAddressString.match(/'([^']+)'/g); %>
-                                                        <% if (matches) { %>
-                                                            <% const addressComponents=matches.map(match=>
-                                                                match.replace(/'/g, '').trim()); %>
-                                                                <% const filteredComponents=addressComponents.slice(0,
-                                                                    -1); %>
-                                                                    <% const addressWithoutId=filteredComponents.join(', '); %>
+
+
+
+                        <section
+                            style="background-color: #b3bbc0; width: 80%; margin: 0 auto; padding: 10px; border-radius: 7px; margin-top: 1rem;">
+                            <div class="container">
+                                <!-- Content of the second container... -->
+
+                                <div class="table-wrapper">
+                                    <table class="table table-centered mb-0 table-nowrap"
+                                        style="background-color: white;">
+                                        <thead class="text-center table-dark">
+                                            <tr>
+                                                <th class="border-top-0" scope="col">Customer</th>
+                                                <th class="border-top-0" scope="col">Order Date</th>
+                                                <th class="border-top-0" scope="col">Delivery Status</th>
+                                                <th class="border-top-0" scope="col">Address</th>
+                                                <th class="border-top-0" scope="col">Payment Method</th>
+                                                <th class="border-top-0" scope="col">Total Amount</th>
+                                                <th scope="col">Product</th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Order status</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <% orders.forEach(order=> { %>
+                                                <tr>
+                                                    <td>
+                                                        <% if (order.customer && order.customer.name) { %>
+                                                            ⭐ <%= order.customer.name %>
+                                                                <% } else { %>
+                                                                    No Name
+                                                                    <% } %>
+                                                    </td>
+                                                    <td>
+                                                        <%= order.orderDate.toDateString() %>
+                                                    </td>
+                                                    <td>
+                                                        <% if (order.status==='Cancelled' ) { %>
+                                                            <span class="text-danger">
+                                                                <%= order.status %>
+                                                            </span>
+                                                            <% } else if (order.status==='delivered' ) { %>
+                                                                <span class="text-success">
+                                                                    <%= order.status %>
+                                                                </span>
+                                                                <% } else { %>
+                                                                    <%= order.status %>
+                                                                        <% } %>
+                                                    </td>
+
+                                                    <td style="max-width: 150px; word-wrap: break-word;">
+                                                        <!-- <%= order.orderAddress %> -->
+                                                        <% const orderAddressString=order.orderAddress; %>
+                                                            <% if (orderAddressString) { %>
+                                                                <% const matches=orderAddressString.match(/'([^']+)'/g);
+                                                                    %>
+                                                                    <% if (matches) { %>
+                                                                        <% const addressComponents=matches.map(match=>
+                                                                            match.replace(/'/g, '').trim()); %>
+                                                                            <% const
+                                                                                filteredComponents=addressComponents.slice(0,
+                                                                                -1); %>
+                                                                                <% const
+                                                                                    addressWithoutId=filteredComponents.join(', '); %>
                                             <p><%= addressWithoutId %></p>
                                         <% } else { %>
                                             <!-- <p>No address available</p> -->
@@ -184,107 +205,122 @@
                                             </td>
                                             <td>
                                                 <% if (order.status===' Cancelled' ) { %>
-                                                                        <span class="text-danger">
-                                                                            Cancelled
-                                                                        </span>
-                                                                        <% } else if (order.status==='delivered' ) { %>
-                                                                            <span class="text-success">
-                                                                                completed
-                                                                            </span>
-                                                                            <% } else { %>
-                                                                                <span class="text-info">
-                                                                                    ongoing
-                                                                                </span>
-                                                                                <% } %>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex" style="height: 100px;">
-                                                <div class="vr"></div>
+                                                                                    <span class="text-danger">
+                                                                                        Cancelled
+                                                                                    </span>
+                                                                                    <% } else if
+                                                                                        (order.status==='delivered' ) {
+                                                                                        %>
+                                                                                        <span class="text-success">
+                                                                                            completed
+                                                                                        </span>
+                                                                                        <% } else { %>
+                                                                                            <span class="text-info">
+                                                                                                ongoing
+                                                                                            </span>
+                                                                                            <% } %>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex" style="height: 100px;">
+                                                            <div class="vr"></div>
+                                                        </div>
+                                                    </td>
+                                                    <% }); %>
+
+                                                </tr>
+                                                <% }); %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+
+
+                        <!-- sales report model -->
+                        <div class="modal fade" id="salesReportModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Download Sales Report</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="salesReportForm" method="GET">
+                                            <div class="mb-3">
+                                                <label for="startDate" class="col-form-label">Start date:</label>
+                                                <input type="date" class="form-control" id="startDate" name="startDate">
                                             </div>
-                                        </td>
-                                        <% }); %>
-
-                                    </tr>
-                                    <% }); %>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-
-            <!-- sales report model -->
-            <div class="modal fade" id="salesReportModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Download Sales Report</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="salesReportForm" method="GET">
-                                <div class="mb-3">
-                                    <label for="startDate" class="col-form-label">Start date:</label>
-                                    <input type="date" class="form-control" id="startDate" name="startDate">
+                                            <div class="mb-3">
+                                                <label for="endDate" class="col-form-label">End date:</label>
+                                                <input type="date" class="form-control" id="endDate" name="endDate">
+                                            </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-success"
+                                            formaction="/admin/custom-orders-excel">Download Excel</button>
+                                        <button type="submit" class="btn btn-danger"
+                                            formaction="/admin/custom-orders-pdf">Download
+                                            PDF</button>
+                                    </div>
+                                    </form>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="endDate" class="col-form-label">End date:</label>
-                                    <input type="date" class="form-control" id="endDate" name="endDate">
-                                </div>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success"
-                                formaction="/admin/custom-orders-excel">Download Excel</button>
-                            <button type="submit" class="btn btn-danger" formaction="/admin/custom-orders-pdf">Download
-                                PDF</button>
+
+
+
+                        <!-- Pagination code -->
+                        <div class="container mt-4">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center">
+                                    <% if (currentPage> 1) { %>
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                                href="/admin/salesReport?page=<%= currentPage - 1 %>&limit=<%= limit %>"
+                                                aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <% } %>
+
+                                            <% for (let i=1; i <=totalPages; i++) { %>
+                                                <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                                                    <a class="page-link"
+                                                        href="/admin/salesReport?page=<%= i %>&limit=<%= limit %>">
+                                                        <%= i %>
+                                                    </a>
+                                                </li>
+                                                <% } %>
+
+                                                    <% if (currentPage < totalPages) { %>
+                                                        <li class="page-item">
+                                                            <a class="page-link"
+                                                                href="/admin/salesReport?page=<%= currentPage + 1 %>&limit=<%= limit %>"
+                                                                aria-label="Next">
+                                                                <span aria-hidden="true">&raquo;</span>
+                                                            </a>
+                                                        </li>
+                                                        <% } %>
+                                </ul>
+                            </nav>
                         </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <!-- Pagination code -->
-            <div class="container mt-4">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center">
-                        <% if (currentPage> 1) { %>
-                            <li class="page-item">
-                                <a class="page-link"
-                                    href="/admin/salesReport?page=<%= currentPage - 1 %>&limit=<%= limit %>"
-                                    aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <% } %>
-
-                                <% for (let i=1; i <=totalPages; i++) { %>
-                                    <li class="page-item <%= i === currentPage ? 'active' : '' %>">
-                                        <a class="page-link" href="/admin/salesReport?page=<%= i %>&limit=<%= limit %>">
-                                            <%= i %>
-                                        </a>
-                                    </li>
-                                    <% } %>
-
-                                        <% if (currentPage < totalPages) { %>
-                                            <li class="page-item">
-                                                <a class="page-link"
-                                                    href="/admin/salesReport?page=<%= currentPage + 1 %>&limit=<%= limit %>"
-                                                    aria-label="Next">
-                                                    <span aria-hidden="true">&raquo;</span>
-                                                </a>
-                                            </li>
-                                            <% } %>
-                    </ul>
-                </nav>
-            </div>
-        </section>
+                    </section>
     </main>
     <footer>
         <!-- place footer here -->
     </footer>
+
+    <script>
+        function closeFlashMessage() {
+            const flashMessage = document.querySelector('.alert.alert-danger, .alert.alert-success');
+            if (flashMessage) {
+                flashMessage.remove();
+            }
+        }
+    </script>
+
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

@@ -93,11 +93,44 @@ const verifyLogin = async (req, res) => {
 //         console.log(error.message);
 //     }
 // }
+// Function to retrieve total order count for specific months
+async function getOrderCountByMonth() {
+    try {
+        const ordersByMonth = await Order.aggregate([
+            {
+                $group: {
+                    _id: { $month: '$orderDate' }, // Grouping by month
+                    totalOrders: { $sum: 1 } // Counting total orders in each group
+                }
+            },
+            {
+                $project: {
+                    _id: 0, // Exclude _id field
+                    month: '$_id', // Rename _id to month
+                    totalOrders: 1 // Include totalOrders field
+                }
+            }
+        ]);
+
+        const orderCountsArray = new Array(12).fill(0);
+        ordersByMonth.forEach((item) => {
+            orderCountsArray[item.month - 1] = item.totalOrders;
+        });
+
+        return orderCountsArray;
+    } catch (error) {
+        console.error('Error retrieving order count by month:', error);
+        throw error;
+    }
+}
+
 const loadDashboard = async (req, res) => {
     try {
         const totalOrders = await Order.countDocuments({});
         const totalUsers = await User.countDocuments({});
         const userData = await User.findById(req.session.admin_id);
+
+        const orderCounts = await getOrderCountByMonth();
 
         const currentDate = new Date();
 
@@ -129,7 +162,7 @@ const loadDashboard = async (req, res) => {
             totalUsers,
             dailySalesData,
             weeklySalesData,
-            yearlySalesData
+            yearlySalesData, orderCounts
         });
     } catch (error) {
         console.log(error.message);
@@ -601,6 +634,7 @@ const orderHistorLoad = async (req, res) => {
         }
 
         const orders = await Order.find(query)
+            .sort({ orderDate: -1 })
             .skip(skip)
             .limit(limit)
             .populate('customer')
@@ -870,6 +904,18 @@ const customOrdersExcel = async (req, res) => {
             return res.status(400).send('Invalid date format');
         }
 
+        const currentDate = new Date();
+
+        if (startDate > currentDate || endDate > currentDate) {
+            req.flash('error', 'Start and end dates cannot be greater than today\'s date');
+            return res.redirect('/admin/salesReport'); // Redirect to your original page
+        }
+
+        if (endDate < startDate) {
+            req.flash('error', 'End date cannot be earlier than start date');
+            return res.redirect('/admin/salesReport'); // Redirect to your original page
+        }
+
         const orderData = await Order.find({
             orderDate: {
                 $gte: startDate,
@@ -944,6 +990,18 @@ const customOrdersToPDF = async (req, res) => {
 
         if (!startDate || !endDate) {
             return res.status(400).send('Invalid date format');
+        }
+
+        const currentDate = new Date();
+
+        if (startDate > currentDate || endDate > currentDate) {
+            req.flash('error', 'Start and end dates cannot be greater than today\'s date');
+            return res.redirect('/admin/salesReport'); // Redirect to your original page
+        }
+
+        if (endDate < startDate) {
+            req.flash('error', 'End date cannot be earlier than start date');
+            return res.redirect('/admin/salesReport'); // Redirect to your original page
         }
 
         const orders = await Order.find({

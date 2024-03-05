@@ -116,7 +116,45 @@
             display: block;
         }
     </style>
+    <style>
+        /* Custom CSS for button size */
+        @media (min-width: 992px) {
 
+            /* Large screens (≥992px) */
+            #addToCartButton,
+            #buyNowButton {
+                width: 20rem;
+                height: 6rem;
+                /* Adjust the height as needed */
+            }
+
+            #buyNowButton {
+                margin-right: 10px;
+                /* Adjust the margin as needed */
+            }
+
+        }
+
+        @media (max-width: 991px) {
+
+            /* Small screens (<992px) */
+            #addToCartButton,
+            #buyNowButton {
+                width: 10rem;
+                height: 4rem;
+                /* Adjust the height as needed */
+            }
+        }
+
+        @media (max-width: 991px) {
+
+            /* Small screens (<992px) */
+            #buyNowButton {
+                margin-right: 10px;
+                /* Adjust the margin as needed */
+            }
+        }
+    </style>
 
 </head>
 
@@ -261,61 +299,47 @@
                                     </div>
                                 </div>
 
-                                <!-- <div class="row mb-4 mt-1 justify-content-center ml-1">
-                        <div
-                            class="col-12 col-md-8 col-xl-8 col-xxl-8 d-flex justify-content-between w-100 text-center flex-md-nowrap flex-xxl-nowrap">
-                            <form id="addToCartForm" action="/buy-now" method="post" class="d-flex flex-wrap w-100">
-                                <input type="hidden" name="product_id" value="<%= ProductData._id %>" />
-                                <input type="hidden" name="name" value="<%= ProductData.name %>" />
-                                <input type="hidden" name="price" value="<%= ProductData.price %>" />
-                                <input type="hidden" name="imageURL"
-                                    value="/images/productImages/<%= ProductData.variants[0].images[0] %>" />
-                                <a href="/add-to-cart" id="addToCartButton"
-                                    class="btn btn-primary d-flex align-items-center justify-content-center me-2 mb-2"
-                                    style="width: 300px; height: 60px">Add To Cart</a>
-                                <button type="submit" id="buyNowButton"
-                                    class="btn btn-warning d-flex align-items-center justify-content-center mb-2"
-                                    style="width: 300px; height: 60px">Buy Now</button>
-                            </form>
-                        </div>
-                    </div> -->
+
                                 <div class="row mb-4 mt-1 justify-content-center ml-1">
                                     <div
-                                        class="col-12 col-md-8 col-xl-8 col-xxl-8 d-flex justify-content-between w-100 text-center flex-md-nowrap flex-xxl-nowrap">
+                                        class="col-12 col-md-8 col-lg-6 col-xl-6 d-flex justify-content-between w-100 text-center flex-md-nowrap flex-lg-nowrap flex-xl-nowrap">
 
-                                        <!-- Form for Add To Cart action -->
+
                                         <form id="addToCartForm" action="/add-to-cart" method="post"
-                                            class="d-flex flex-wrap w-100">
+                                            class="d-flex flex-wrap">
                                             <input type="hidden" name="product_id" value="<%= ProductData._id %>" />
                                             <input type="hidden" name="name" value="<%= ProductData.name %>" />
                                             <input type="hidden" name="price" value="<%= ProductData.price %>" />
+                                            <input type="hidden" name="discountedPrice" value="<%= discountedPrice %>">
                                             <input type="hidden" name="imageURL"
                                                 value="/images/productImages/<%= ProductData.variants[0].images[0] %>" />
-                                            <!-- Add more hidden fields if needed -->
+
 
                                             <button type="submit" id="addToCartButton"
                                                 class="btn btn-primary d-flex align-items-center justify-content-center me-2 mb-2"
-                                                style="width: 300px; height: 60px">Add To Cart</button>
+                                                style="height: 60px">Add To
+                                                Cart</button>
                                         </form>
 
-                                        <!-- Form for Buy Now action -->
+
                                         <form id="buyNowForm" action="/buy-now" method="post"
                                             class="d-flex flex-wrap w-100">
                                             <input type="hidden" name="product_id" value="<%= ProductData._id %>" />
                                             <input type="hidden" name="name" value="<%= ProductData.name %>" />
                                             <input type="hidden" name="Price" value="<%= ProductData.price %>" />
                                             <input type="hidden" name="discountedPrice" value="<%= discountedPrice %>">
-                                            <!-- <input type="hidden" name="imageURL"
-                                                value="/images/productImages/<%= ProductData.variants[0].images[0] %>" /> -->
+
                                             <input type="hidden" name="imageURL"
                                                 value="<%= ProductData.variants[0].images[0].startsWith('data:image/') ? ProductData.variants[0].images[0] : '/images/productImages/' + ProductData.variants[0].images[0] %>" />
                                             <button type="submit" id="buyNowButton"
                                                 class="btn btn-warning d-flex align-items-center justify-content-center mb-2"
-                                                style="width: 300px; height: 60px">Buy Now</button>
+                                                style="height: 60px;">Buy Now</button>
                                         </form>
 
                                     </div>
                                 </div>
+
+
 
 
                                 <p class="font-weight-bold justify-content-between">Choose Color:</p>
@@ -419,33 +443,6 @@
     </script>
 
 
-    <!-- <script>
-        function addToCart() {
-            fetch('/add-to-cart', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    product_id: '<%= ProductData._id %>',
-                    name: '<%= ProductData.name %>',
-                    price: '<%= ProductData.price %>',
-                    imageURL: '/images/productImages/<%= ProductData.variants[0].images[0] %>',
-                }),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-
-                    // Redirect to the cart page after adding to the cart
-                    // window.location.href = '/cart';
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-    </script> -->
-
     <script>
         function closeFlashMessage() {
             const flashMessage = document.querySelector('.alert.alert-danger, .alert.alert-success');
@@ -455,22 +452,14 @@
         }
     </script>
 
-
-
-
-
-
-
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnify/2.3.3/js/jquery.magnify.min.js"
         integrity="sha512-YKxHqn7D0M5knQJO2xKHZpCfZ+/Ta7qpEHgADN+AkY2U2Y4JJtlCEHzKWV5ZE87vZR3ipdzNJ4U/sfjIaoHMfw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- <script src="/js/imageZoom.js"></script> -->
+
     <footer>
         <!-- place footer here -->
-
-
+        <%- include('../layouts/footer.ejs') %>
     </footer>
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

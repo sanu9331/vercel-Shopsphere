@@ -157,6 +157,7 @@ const insertUser = async (req, res) => {
 
         const { name, email, mno, password, confirmPassword } = req.body;
 
+
         if (password !== confirmPassword) {
             return res.render('registration', { message: "Password and Confirm Password do not match" });
         }
@@ -946,14 +947,18 @@ const loadAddressEdit = async (req, res) => {
     try {
         const userId = req.session.user_id;
         const userData = await User.findById({ _id: userId });
+        const addressIndex = req.params.index;
+        console.log('address index=', addressIndex);
 
-        if (userData) {
-            return res.render('addressEdit', { userData });
 
+        const address = userData.address[addressIndex];
+
+        if (address) {
+            // Pass the found address to the template
+            return res.render('addressEdit', { userData, address, addressIndex });
         } else {
-            return res.status(404).send('User not found');
+            return res.status(404).send('Address not found');
         }
-
 
     } catch (error) {
         console.log(error);
@@ -964,19 +969,45 @@ const loadAddressEdit = async (req, res) => {
 const updateAddress = async (req, res) => {
     try {
         const userId = req.session.user_id;
-        const { newAddress, addressIndex } = req.body;
-        console.log('new address =', newAddress, 'address index =', addressIndex);
+        // const { streetaddress, postalcode, city, state, country } = req.body;
+        const addressIndex = req.params.addressIndex;
+        const streetaddress = req.body.streetaddress.trim();
+        const postalcode = req.body.postalcode.trim();
+        const city = req.body.city.trim();
+        const state = req.body.state.trim();
+        const country = req.body.country.trim();
 
-        // Find the user by ID and update the address
-        const user = await User.findByIdAndUpdate(userId, { $set: { [`address.${addressIndex}`]: newAddress } }, { new: true });
 
-        // Respond with the updated user
+
+        // Find the user by ID
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (streetaddress == '' || postalcode == '' || city == '' || state == '' || country == '') {
+            req.flash('error', 'please fill all forms');
+            return res.redirect('/manageAddress');
+        }
+
+        // Update the address fields
+        user.address[addressIndex].streetaddress = streetaddress;
+        user.address[addressIndex].postalcode = postalcode;
+        user.address[addressIndex].city = city;
+        user.address[addressIndex].state = state;
+        user.address[addressIndex].country = country;
+
+        // Save the updated user
+        await user.save();
+
         return res.redirect('/manageAddress');
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
     }
 };
+
 
 // const addNewAddress = async (req, res) => {
 //     try {
@@ -1044,21 +1075,14 @@ const deleteAddress = async (req, res) => {
     try {
         const userId = req.session.user_id;
         const { addressIndex } = req.body;
-
-        // Find the user by ID
         const user = await User.findById(userId);
-
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-
-        // Remove the address at the specified index
         user.address.splice(addressIndex, 1);
-
-        // Save the updated user
         await user.save();
 
-        // Redirect back to the manageAddress page or send a response as needed
+
         return res.redirect('/manageAddress');
     } catch (error) {
         console.error(error);

@@ -290,7 +290,7 @@
                                                                 <%= userData.email %>
                                                             </p>
 
-                                                            <button type="button" class="btn btn-primary"
+                                                            <!-- <button type="button" class="btn btn-primary"
                                                                 data-bs-toggle="modal" data-bs-target="#addAddress">add
                                                                 address</button>
 
@@ -300,7 +300,7 @@
                                                                         class="icofont-ui-edit"></i>
                                                                     Edit
                                                                     address</a>
-                                                            </p>
+                                                            </p> -->
 
 
 
@@ -323,7 +323,7 @@
                                             <div class="tab-content" id="myTabContent">
                                                 <div class="tab-pane fade  active show" id="addresses" role="tabpanel"
                                                     aria-labelledby="addresses-tab">
-                                                    <h4 class="font-weight-bold mt-0 mb-4">Manage Addresses</h4>
+                                                    <h4 class="font-weight-bold mt-0 mb-4">Create new address</h4>
                                                     <h6 style="margin-left: 1px;">add new address here</h6>
                                                     <div class="containers" id="addNewAddressContainers">
 
@@ -344,17 +344,21 @@
                                                                 <label for="postal-code">ZIP or postal code</label>
                                                                 <input type="number" class="postal-code" id="postalcode"
                                                                     name="postalcode" autocomplete="postal-code"
-                                                                    enterkeyhint="next">
+                                                                    enterkeyhint="next"
+                                                                    oninput="this.value = this.value.slice(0, 6)"
+                                                                    required>
                                                             </div>
                                                             <div>
                                                                 <label for="city">City</label>
                                                                 <input required type="text" id="city" name="city"
-                                                                    autocomplete="address-level2" enterkeyhint="next">
+                                                                    autocomplete="address-level2" enterkeyhint="next"
+                                                                    required>
                                                             </div>
                                                             <div>
                                                                 <label for="city">State</label>
                                                                 <input required type="text" id="state" name="state"
-                                                                    autocomplete="address-level2" enterkeyhint="next">
+                                                                    autocomplete="address-level2" enterkeyhint="next"
+                                                                    required>
                                                             </div>
                                                             <div>
                                                                 <label for="country">Country or region</label>
@@ -688,56 +692,7 @@
 
 
                                                     <div class="row">
-                                                        <% if (userData.address && userData.address.length> 0) { %>
-                                                            <% userData.address.forEach((address, index)=> { %>
-                                                                <div class="col-md-6">
-                                                                    <span style="font-weight: 500;">Address <%= index +
-                                                                            1 %>
-                                                                            :</span>
-                                                                    <div
-                                                                        class="bg-white card addresses-item mb-4 border border-primary shadow">
 
-                                                                        <div class="gold-members p-4">
-                                                                            <div class="media">
-                                                                                <div class="mr-3"><i
-                                                                                        class="icofont-ui-home icofont-3x"></i>
-                                                                                </div>
-                                                                                <div class="media-body">
-                                                                                    <!-- <h6 class="mb-1 text-secondary">Home</h6> -->
-                                                                                    <p class="text-black">🏠 <%=
-                                                                                            address.streetaddress %>,
-                                                                                            <%= address.city %>, <%=
-                                                                                                    address.state %>,
-                                                                                                    <%= address.postalcode
-                                                                                                        %>,
-                                                                                                        <%= address.country
-                                                                                                            %>
-                                                                                    </p>
-                                                                                    <p
-                                                                                        class="mb-0 text-black font-weight-bold">
-                                                                                        <a class="text-primary mr-3"
-                                                                                            href="#">
-                                                                                            EDIT
-                                                                                        </a>
-                                                                                        <a class="text-danger"
-                                                                                            data-bs-toggle="modal"
-                                                                                            data-bs-target="#modalConfirmDelete"
-                                                                                            href="#">
-                                                                                            <i
-                                                                                                class="icofont-ui-delete"></i>
-                                                                                            DELETE
-                                                                                        </a>
-                                                                                    </p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <% }); %>
-                                                                    <% } else { %>
-                                                                        <p class="text-muted mb-0">No address specified
-                                                                        </p>
-                                                                        <% } %>
                                                     </div>
 
 

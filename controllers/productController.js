@@ -51,7 +51,8 @@ const loadProduct = async (req, res) => {
             query = {
                 $or: [
                     { name: { $regex: search, $options: 'i' } }, // Case-insensitive search for name
-                    { brand: { $regex: search, $options: 'i' } } // Case-insensitive search for description
+                    { brand: { $regex: search, $options: 'i' } },
+
                 ]
             };
         }
@@ -223,7 +224,8 @@ const addProduct = async (req, res) => {
         }
 
         await ProductData.save();
-        res.redirect("/admin/products");
+        req.flash('success', 'product added');
+        res.redirect("/admin/products/add");
 
     } catch (error) {
         console.error(error);

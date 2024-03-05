@@ -432,6 +432,10 @@ const placeOrder = async (req, res) => {
         const userId = req.session.user_id;
         const paymentMethod = req.body.paymentMethod;
 
+        // if (couponDiscountPrice) {
+        //     totalPrice = couponDiscountPrice; // If couponDiscountPrice exists, set totalPrice to couponDiscountPrice
+        // }
+        // console.log('coupon discount=', totalPrice);
         console.log('Selected Payment Method:', paymentMethod);
         // console.log('totalPrice=', totalPrice);
 
@@ -465,7 +469,7 @@ const placeOrder = async (req, res) => {
             const currency = 'INR';
 
             const options = {
-                amount,
+                amount: couponDiscountPrice || amount,
                 currency,
                 receipt: 'razorUser@gmail.com',
                 payment_capture: 1,
@@ -677,6 +681,8 @@ const clearCouponDiscountPrice = async () => {
 };
 
 
+
+
 module.exports = {
     placeOrder,
     loadOrderPlaced, loadProceedToCheckout, updateBillingInfo, removeOrder,
@@ -684,4 +690,5 @@ module.exports = {
     loadReturnOrders, submitOrderReturn,
     loadOrderDetailPage, loadAdminOrderDetailPage,
     clearCouponDiscountPrice
+
 }

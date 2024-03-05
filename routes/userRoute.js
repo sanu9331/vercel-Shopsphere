@@ -64,8 +64,8 @@ user_route.get('/userProfile-edit', auth.isLogin, userController.editLoad);
 user_route.post('/userProfile-edit', uploadUserImage.single('image'), userController.updateProfile);
 
 user_route.get('/manageAddress', userController.loadManageAddress);
-user_route.get('/addressEdit', userController.loadAddressEdit);
-user_route.post("/update-address", userController.updateAddress);
+user_route.get('/addressEdit/:index', userController.loadAddressEdit);
+user_route.post("/update-address/:addressIndex", userController.updateAddress);
 user_route.post('/add-address', userController.addNewAddress);
 user_route.post('/delete-address', userController.deleteAddress);
 

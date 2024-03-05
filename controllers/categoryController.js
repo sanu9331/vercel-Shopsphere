@@ -110,7 +110,7 @@ const addNewCategory = async (req, res) => {
             const newCategoryData = await newCategory.save();
             console.log('New Category:', newCategoryData);
         }
-
+        req.flash("success", "Category added successfully.");
         res.redirect("/admin/category");
     } catch (error) {
         console.log(error.message);

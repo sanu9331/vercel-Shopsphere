@@ -280,56 +280,49 @@
 
                                     <td colspan="3"></td>
 
-                                    <% order.items.forEach((item, itemIndex)=> { %>
 
-                                        <td colspan="6"></td>
-                                        <!-- <td>
-                                            <a href="/loadViewProductsModal/<%= order._id %>" class="btn btn-primary"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#mailModal2_<%= orderIndex %>_<%= itemIndex %>">
-                                                View Products
-                                            </a>
+
+                                    <td colspan="6"></td>
+
+                                    <td>
+                                        <a href="/admin/adminOrderDetailPage?orderId=<%= order._id %>"
+                                            class="btn btn-primary">
+                                            View Products
+                                        </a>
+                                    </td>
+                                    <!-- <td><a href="/admin/adminOrderDetailPage?orderId=<%= order._id %>">view P</a>
                                         </td> -->
-                                        <td>
-                                            <a href="/admin/adminOrderDetailPage?orderId=<%= order._id %>"
-                                                class="btn btn-primary">
-                                                View Products
-                                            </a>
-                                        </td>
-                                        <!-- <td><a href="/admin/adminOrderDetailPage?orderId=<%= order._id %>">view P</a>
-                                        </td> -->
-                                        <td>
-                                            <% if (order.status==='Cancelled' ) { %>
-                                                <span class="text-danger">
-                                                    Cancelled
+                                    <td>
+                                        <% if (order.status==='Cancelled' ) { %>
+                                            <span class="text-danger">
+                                                Cancelled
+                                            </span>
+                                            <% } else if (order.status==='delivered' ) { %>
+                                                <span class="text-success">
+                                                    completed
                                                 </span>
-                                                <% } else if (order.status==='delivered' ) { %>
-                                                    <span class="text-success">
-                                                        completed
+                                                <% } else if (order.status==='pending' ) { %>
+
+                                                    <span class="text-info">
+                                                        ongoing
                                                     </span>
-                                                    <% } else if (order.status==='pending' ) { %>
-
-                                                        <span class="text-info">
-                                                            ongoing
-                                                        </span>
-                                                        <% } else if (order.status==='returned' ) { %>
-                                                            <button class="btn btn-outline-warning"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#approve">approve</button>
-                                                            <% } else if (order.status==='returnApproved' ) { %>
-                                                                <span style="color: #ff69b4;">
-                                                                    return approved
+                                                    <% } else if (order.status==='returned' ) { %>
+                                                        <button class="btn btn-outline-warning" data-bs-toggle="modal"
+                                                            data-bs-target="#approve">approve</button>
+                                                        <% } else if (order.status==='returnApproved' ) { %>
+                                                            <span style="color: #ff69b4;">
+                                                                return approved
+                                                            </span>
+                                                            <% } else if (order.status==='returnRejected' ) { %>
+                                                                <span style="color: red;">
+                                                                    return rejected
                                                                 </span>
-                                                                <% } else if (order.status==='returnRejected' ) { %>
-                                                                    <span style="color: red;">
-                                                                        return rejected
-                                                                    </span>
-                                                                    <% } %>
+                                                                <% } %>
 
-                                        </td>
+                                    </td>
                                 </tr>
+
                                 <% }); %>
-                                    <% }); %>
                         </tbody>
                     </table>
 

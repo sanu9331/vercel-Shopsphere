@@ -719,7 +719,7 @@
                                                                             $ <%= totalPrice %>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr class="bg-light">
+                                                                    <!-- <tr class="bg-light">
                                                                         <td colspan="2">
                                                                             <h5 class="font-size-14 m-0">Discounted
                                                                                 price:
@@ -728,7 +728,7 @@
                                                                         <td class="product-price">
                                                                             $ <%= totalPrice %>
                                                                         </td>
-                                                                    </tr>
+                                                                    </tr> -->
                                                                     <tr class="bg-light">
                                                                         <td colspan="2">
                                                                             <h5 class="font-size-14 m-0">Amount to pay:
@@ -972,7 +972,12 @@
 
 
 
-                const couponDiscountPrice = document.querySelector('input[name="couponDiscountPrice"]').value;
+                const couponDiscountPriceInput = document.querySelector('input[name="couponDiscountPrice"]');
+                console.log('Coupon discount price input value:', couponDiscountPriceInput.value);
+                const couponDiscountPrice = Math.round(parseFloat(couponDiscountPriceInput.value) * 100);
+
+                console.log('Rounded coupon discount price:', couponDiscountPrice);
+                ;
 
 
                 // const items = [];
@@ -994,6 +999,9 @@
 
                 const responseData = await response.json();
 
+                console.log('couponDiscountPrice=', couponDiscountPrice);
+                console.log('amount=', amount);
+
                 if (selectedPaymentMethod === 'cashOnDelivery' && responseData.success) {
                     // Redirect to order placed page for cash on delivery
                     window.location.href = '/orderPlaced';
@@ -1002,7 +1010,7 @@
                     // Initiate Razorpay Checkout
                     const options = {
                         key: responseData.key_id,
-                        amount: responseData.amount,
+                        amount: couponDiscountPrice || responseData.amount,
                         currency: responseData.currency,
                         name: 'shopsphere',
                         description: 'Add money to wallet',
@@ -1017,7 +1025,7 @@
                                     },
                                     body: JSON.stringify({
                                         razorpay_payment_id: response.razorpay_payment_id,
-                                        amount: responseData.amount,
+                                        amount: couponDiscountPrice || responseData.amount,
                                         paymentMethod: selectedPaymentMethod, items, address: selectedAddress, couponDiscountPrice
                                     }),
                                 });

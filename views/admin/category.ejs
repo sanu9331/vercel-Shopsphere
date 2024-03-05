@@ -23,93 +23,109 @@
         <%- include('../layouts/adminHeader.ejs') %>
     </header>
     <main>
-
-        <div class="container mt-4">
-
-            <div class="row d-inline-flex align-items-center justify-content-center  ">
-                <div class=" col-md-10 col-lg-10 ">
-
-
-                    <div class="d-flex justify-content-between">
-                        <h1 class="text-bg-info  rounded"
-                            style="font-size: 30px; width: 230px; text-align: center;  font-family:Arial, Helvetica, sans-serif;">
-                            Category List</h1>
-
-
-                        <form id="searchForm" method="GET" action="/admin/Category">
-                            <div class="input-group" style="width: 14rem; margin-left: 23rem;">
-                                <input type="search" name="search" class="form-control rounded" placeholder="Search"
-                                    aria-label="Search" aria-describedby="search-addon" />
-                                <button type="submit" class="btn btn-success" data-mdb-ripple-init>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem"
-                                        fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                        <path
-                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </form>
-
-                        <button class="btn btn-success mb-2" data-bs-toggle="modal"
-                            data-bs-target="#addCategoryModal">Add
-                            Category <b>/</b> Subcategory</button>
-
-                    </div>
-
-
-
-                    <% if (CategoryData.length===0) { %>
-                        <div class="alert alert-warning" role="alert">
-                            No products found
-                        </div>
-                        <% } else { %>
-                            <!-- <div class="overflow-auto p-3 bg-light" style="max-width: 1500px; max-height: 600px;"> -->
-                            <table class="table">
-                                <thead class="text-center table-dark">
-                                    <tr>
-                                        <th>Category</th>
-                                        <th>Sub Category</th>
-                                        <th>Description</th>
-                                        <th>Actions</th>
-                                        <th>image</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="align-center">
-                                    <% CategoryData.forEach(function(category) { %>
-                                        <tr class="text-center">
-                                            <td>
-                                                <%= category.category %>
-                                            </td>
-                                            <td class="description-column">
-                                                <%= category.sub_Category %>
-                                            </td>
-                                            <td class="description-column">
-                                                <%= category.description %>
-                                            </td>
-                                            <td class="description-column">
-                                                <img width="50px" height="50px"
-                                                    src="/images/categoryImages/<%= category.image %>" alt="">
-                                            </td>
-
-                                            <td>
-                                                <a href="/admin/category/edit/<%= category._id %>"
-                                                    class="btn btn-warning">Edit</a>
-                                                <a href="javascript:void(0);"
-                                                    onclick="confirmDelete('<%= category._id %>','/admin/category/delete/','You will not be able to recover this category!')"
-                                                    class="btn btn-danger">Delete</a>
-                                            </td>
-
-                                        </tr>
-                                        <% }); %>
-                                </tbody>
-                            </table>
-
-
-                            <% } %>
-                                <!-- </div> -->
-                </div>
+        <% if (messages.error) { %>
+            <div class="alert alert-danger">
+                <%= messages.error %>
+                    <button type="button" class="close" aria-label="Close" onclick="closeFlashMessage()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
             </div>
-        </div>
+            <% } else if (messages.success) { %>
+                <div class="alert alert-success">
+                    <%= messages.success %>
+                        <button type="button" class="close" aria-label="Close" onclick="closeFlashMessage()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <% } %>
+                    <div class="container mt-4">
+
+                        <div class="row d-inline-flex align-items-center justify-content-center  ">
+                            <div class=" col-md-10 col-lg-10 ">
+
+
+                                <div class="d-flex justify-content-between">
+                                    <h1 class="text-bg-info  rounded"
+                                        style="font-size: 30px; width: 230px; text-align: center;  font-family:Arial, Helvetica, sans-serif;">
+                                        Category List</h1>
+
+
+                                    <form id="searchForm" method="GET" action="/admin/Category">
+                                        <div class="input-group" style="width: 14rem; margin-left: 23rem;">
+                                            <input type="search" name="search" class="form-control rounded"
+                                                placeholder="Search" aria-label="Search"
+                                                aria-describedby="search-addon" />
+                                            <button type="submit" class="btn btn-success" data-mdb-ripple-init>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem"
+                                                    fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                    <button class="btn btn-success mb-2" data-bs-toggle="modal"
+                                        data-bs-target="#addCategoryModal">Add
+                                        Category <b>/</b> Subcategory</button>
+
+                                </div>
+
+
+
+                                <% if (CategoryData.length===0) { %>
+                                    <div class="alert alert-warning" role="alert">
+                                        No products found
+                                    </div>
+                                    <% } else { %>
+                                        <!-- <div class="overflow-auto p-3 bg-light" style="max-width: 1500px; max-height: 600px;"> -->
+                                        <table class="table">
+                                            <thead class="text-center table-dark">
+                                                <tr>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Description</th>
+                                                    <th>Actions</th>
+                                                    <th>image</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="align-center">
+                                                <% CategoryData.forEach(function(category) { %>
+                                                    <tr class="text-center">
+                                                        <td>
+                                                            <%= category.category %>
+                                                        </td>
+                                                        <td class="description-column">
+                                                            <%= category.sub_Category %>
+                                                        </td>
+                                                        <td class="description-column">
+                                                            <%= category.description %>
+                                                        </td>
+                                                        <td class="description-column">
+                                                            <img width="50px" height="50px"
+                                                                src="/images/categoryImages/<%= category.image %>"
+                                                                alt="">
+                                                        </td>
+
+                                                        <td>
+                                                            <a href="/admin/category/edit/<%= category._id %>"
+                                                                class="btn btn-warning">Edit</a>
+                                                            <a href="javascript:void(0);"
+                                                                onclick="confirmDelete('<%= category._id %>','/admin/category/delete/','You will not be able to recover this category!')"
+                                                                class="btn btn-danger">Delete</a>
+                                                        </td>
+
+                                                    </tr>
+                                                    <% }); %>
+                                            </tbody>
+                                        </table>
+
+
+                                        <% } %>
+                                            <!-- </div> -->
+                            </div>
+                        </div>
+                    </div>
 
     </main>
 
@@ -277,7 +293,14 @@
         }
     </script>
 
-
+    <script>
+        function closeFlashMessage() {
+            const flashMessage = document.querySelector('.alert.alert-danger, .alert.alert-success');
+            if (flashMessage) {
+                flashMessage.remove();
+            }
+        }
+    </script>
 
     <footer style="margin-top: 6rem;">
         <!-- place footer here -->

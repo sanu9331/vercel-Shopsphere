@@ -22,7 +22,7 @@
         }
 
         #transactionTable {
-            width: 100%;
+
             border-collapse: collapse;
             margin-top: 20px;
         }
@@ -72,39 +72,41 @@
                             data-bs-target="#addMoneyModal">Add Money</button>
                     </div>
 
-                    <table id="transactionTable" class="table mt-3">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>Payment Type</th>
-                                <th>Amount</th>
-                                <th>Date</th>
-                                <th>Description</th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody id="transactionBody">
-                            <% walletData.forEach(transaction=> { %>
+                    <div class="table-responsive">
+                        <table id="transactionTable" class="table mt-3">
+                            <thead class="table-dark">
                                 <tr>
-                                    <td>
-                                        <%= transaction.paymentType %>
-                                    </td>
-                                    <td>
-                                        <%= transaction.amount.toFixed(2) %>
-                                            <!-- <%= (transaction.amount / 100).toFixed(2) %> -->
-
-                                    </td>
-                                    <td>
-                                        <%= new Date(transaction.date).toLocaleString() %>
-                                    </td>
-                                    <td>
-                                        <%= transaction.description %>
-                                    </td>
+                                    <th>Payment Type</th>
+                                    <th>Amount</th>
+                                    <th>Date</th>
+                                    <th>Description</th>
 
                                 </tr>
-                                <% }); %>
-                        </tbody>
-                    </table>
+                            </thead>
+
+                            <tbody id="transactionBody">
+                                <% walletData.forEach(transaction=> { %>
+                                    <tr>
+                                        <td>
+                                            <%= transaction.paymentType %>
+                                        </td>
+                                        <td>
+                                            <%= transaction.amount.toFixed(2) %>
+                                                <!-- <%= (transaction.amount / 100).toFixed(2) %> -->
+
+                                        </td>
+                                        <td>
+                                            <%= new Date(transaction.date).toLocaleString() %>
+                                        </td>
+                                        <td>
+                                            <%= transaction.description %>
+                                        </td>
+
+                                    </tr>
+                                    <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
 
                     <!-- Add Money Modal -->
                     <div class="modal fade" id="addMoneyModal" tabindex="-1" role="dialog">
@@ -262,6 +264,7 @@
 
     <footer>
         <!-- place footer here -->
+        <%- include("../layouts/footer.ejs") %>
     </footer>
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

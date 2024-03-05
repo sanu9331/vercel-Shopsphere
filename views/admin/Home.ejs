@@ -141,13 +141,6 @@
         <%- include('../layouts/adminHeader.ejs') %>
     </header>
 
-
-
-
-
-
-
-
     <div id="bodyContent" style="margin-left: 10%;">
 
         <h1 class="text-bg-info rounded" style="font-size: 30px; width: 20rem;height: 3rem; text-align: center;  font-family: 'Alegreya Sans SC', sans-serif;
@@ -176,7 +169,10 @@
                         <%= admin.mobile %>
                     </td>
                 </tr>
-            </table>
+            </table><br>
+
+            <canvas id="barChart"
+                style="max-width: 40rem; max-height: 20rem; min-height: 20rem; min-width: 12rem;"></canvas>
         </div>
         <p style="display: inline-block;">click here to view sales report:</p>
         <a style="display: inline-block; text-decoration: none; font-size: 18px;" href="/admin/salesReport">sales
@@ -337,6 +333,64 @@
             iconCollapse.classList.toggle('icon-collapse');
             iconExpand.classList.toggle('icon-expand');
         }
+    </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+    </script>
+    <script>
+        var orderCounts = <%= JSON.stringify(orderCounts) %>;
+        //bar
+        console.log('orderCount :', orderCounts);
+        var ctxB = document.getElementById("barChart").getContext('2d');
+        var myBarChart = new Chart(ctxB, {
+            type: 'bar',
+            data: {
+                labels: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                datasets: [{
+                    label: 'no. of orders',
+                    data: orderCounts,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
     </script>
 </body>
 

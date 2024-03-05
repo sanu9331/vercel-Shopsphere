@@ -77,10 +77,10 @@
                                                     <%= order.status %>
                                                 </span>
                                             </div>
-                                            <div class="d-flex">
-                                                <!-- <button class="btn btn-link p-0 me-3 d-none d-lg-block btn-icon-text"><i
+                                            <!-- <div class="d-flex">
+                                                <button class="btn btn-link p-0 me-3 d-none d-lg-block btn-icon-text"><i
                                                         class="bi bi-download"></i> <span
-                                                        class="text">Invoice</span></button> -->
+                                                        class="text">Invoice</span></button>
                                                 <div class="dropdown">
                                                     <button class="btn btn-link p-0 text-muted" type="button"
                                                         data-bs-toggle="dropdown">
@@ -95,9 +95,10 @@
                                                                 Print</a></li>
                                                     </ul>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <table class="table table-borderless">
+                                            <!-- Inside the loop where product details are displayed -->
                                             <% order.items.forEach(item=> { %>
                                                 <tbody>
                                                     <tr>
@@ -106,79 +107,42 @@
                                                                 item.product.variants[0] &&
                                                                 item.product.variants[0].images &&
                                                                 item.product.variants[0].images[0]) { %>
-                                                                <div class="d-flex mb-2">
-                                                                    <div class="flex-shrink-0">
-                                                                        <!-- <img src="/images/productImages/<%= item.product.variants[0].images[0] %>"
+                                                                <div class="row align-items-center">
+                                                                    <div class="col-12 col-md-3 mb-2">
+                                                                        <img src="/images/productImages/<%= item.product.variants[0].images[0] %>"
                                                                             alt="<%= item.product.name %>"
                                                                             style="height: 80px; width: 80px;"
-                                                                            class="img-fluid"> -->
-                                                                        <% if
-                                                                            (item.product.variants[0].images[0].startsWith('data:image/'))
-                                                                            { %>
-                                                        <td>
-                                                            <img style="height: 80px; width: 80px;"
-                                                                src="<%= item.product.variants[0].images[0] %>" alt="">
+                                                                            class="img-fluid">
+                                                                    </div>
+                                                                    <div class="col-12 col-md-9">
+                                                                        <h6 class="small mb-0"><a href="#"
+                                                                                class="text-reset">
+                                                                                <%= item.product.name %>
+                                                                            </a></h6>
+                                                                        <span class="small">Color: black</span>
+                                                                    </div>
+                                                                </div>
+                                                                <% } else { %>
+                                                                    <p>Product details not available</p>
+                                                                    <% } %>
                                                         </td>
-                                                        <% } else { %>
-                                                            <td><img style="height: 80px; width: 80px;"
-                                                                    src="/images/productImages/<%=item.product.variants[0].images[0] %>"
-                                                                    alt=""></td>
-                                                            <% } %>
+                                                        <td>
+                                                            <%= item.quantity %>
+                                                        </td>
 
-                                    </div>
-                                    <div class="flex-lg-grow-1 ms-3">
-                                        <h6 class="small mb-0"><a href="#" class="text-reset">
-                                                <%= item.product.name %>
-                                            </a></h6>
-                                        <span class="small">Color: black</span>
-                                    </div>
-                                </div>
-                                <% } else { %>
-                                    <p>Product details not available</p>
-                                    <% } %>
-                                        </td>
-                                        <td>
-                                            <%= item.quantity %>
-                                        </td>
-
-                                        <!-- Calculate discounted price -->
-                                        <% var discountedPrice=item.price - (item.price * item.product.discount / 100);
-                                            %>
-                                            <td class="text-end">
-                                                <del>$<%= item.price.toFixed(2) %></del>
-
-                                                <!-- $<%= discountedPrice.toFixed(2) %> -->
-                                                <% if (order.couponDiscountPrice !==null) { %>
-                                                    $ <%= order.couponDiscountPrice %>
-                                                        <% } else { %>
-                                                            <!-- $ <%= (order.totalAmount / 100).toFixed(2) %> -->
-                                                            $<%= order.totalAmount %>
-                                                                <% } %>
-                                            </td>
-                                            </tr>
-                                            <% }); %>
-                                                <!-- <tr>
-                                                <td>
-                                                    <div class="d-flex mb-2">
-                                                        <div class="flex-shrink-0">
-                                                            <img src="https://www.bootdey.com/image/280x280/FF69B4/000000"
-                                                                alt="" width="35" class="img-fluid">
-                                                        </div>
-                                                        <div class="flex-lg-grow-1 ms-3">
-                                                            <h6 class="small mb-0"><a href="#"
-                                                                    class="text-reset">Smartwatch
-                                                                    IP68 Waterproof GPS and Bluetooth Support</a></h6>
-                                                            <span class="small">Color: White</span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>1</td>
-                                                <td class="text-end">$79.99</td>
-                                            </tr> -->
-
+                                                        <!-- Calculate discounted price -->
+                                                        <% var discountedPrice=item.price - (item.price *
+                                                            item.product.discount / 100); %>
+                                                            <td class="text-end">
+                                                                <del>$<%= item.price.toFixed(2) %></del>
+                                                                $<%= item.product.discountPrice.toFixed(2) %>
+                                                            </td>
+                                                    </tr>
                                                 </tbody>
-                                                <tfoot>
-                                                    <!-- <tr>
+                                                <% }); %>
+
+                                                    <tfoot>
+                                                        <!-- <tr>
                                                 <td colspan="2">Subtotal</td>
                                                 <td class="text-end">$159,98</td>
                                             </tr>
@@ -186,60 +150,62 @@
                                                 <td colspan="2">Shipping</td>
                                                 <td class="text-end">$20.00</td>
                                             </tr> -->
-                                                    <tr>
-                                                        <!-- <td colspan="2">Discount (Code: NEWYEAR)</td>
+                                                        <tr>
+                                                            <!-- <td colspan="2">Discount (Code: NEWYEAR)</td>
                                                         <td class="text-danger text-end">-$10.00</td> -->
-                                                    </tr>
-                                                    <tr class="fw-bold">
+                                                        </tr>
+                                                        <tr class="fw-bold">
 
-                                                        <td colspan="2">TOTAL:</td>
-                                                        <td class="text-start">
-                                                            <!-- Rs: $ <%= (order.totalAmount / 100).toFixed(2) %> -->
-                                                            <% if (order.couponDiscountPrice !==null) { %>
-                                                                $ <%= order.couponDiscountPrice %>
-                                                                    <% } else { %>
-                                                                        <!-- $ <%= (order.totalAmount / 100).toFixed(2) %> -->
-                                                                        $<%= order.totalAmount %>
-                                                                            <% } %>
-                                                        </td>
+                                                            <td colspan="2">TOTAL:</td>
+                                                            <td class="text-start">
+                                                                <!-- Rs: $ <%= (order.totalAmount / 100).toFixed(2) %> -->
+                                                                <% if (order.couponDiscountPrice !==null) { %>
+                                                                    $ <%= order.couponDiscountPrice %>
+                                                                        <% } else { %>
+                                                                            <!-- $ <%= (order.totalAmount / 100).toFixed(2) %> -->
+                                                                            $<%= order.totalAmount %>
+                                                                                <% } %>
+                                                            </td>
 
-                                                    </tr>
-                                                </tfoot>
+                                                        </tr>
+                                                    </tfoot>
 
 
 
-                                                </table>
-                            </div>
-                        </div>
-                        <!-- Payment -->
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <h3 class="h6">Payment Method</h3>
-                                        <!-- <p>Visa -1234 <br>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- Payment -->
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <h3 class="h6">Payment Method</h3>
+                                                <!-- <p>Visa -1234 <br>
                                             Total: $169,98 <span class="badge bg-success rounded-pill">PAID</span></p> -->
 
-                                        <span class="badge bg-success rounded-pill">
-                                            <%= order.paymentMethod %>
-                                        </span>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <h3 class="h6">🏠Billing address</h3>
-                                        <address>
-                                            <strong>
-                                                <%= order.customer.name %>
-                                            </strong><br>
-                                            <!-- 🏠<%= order.orderAddress %> -->
-                                            <% const orderAddressString=order.orderAddress; %>
-                                                <% if (orderAddressString) { %>
-                                                    <% const matches=orderAddressString.match(/'([^']+)'/g); %>
-                                                        <% if (matches) { %>
-                                                            <% const addressComponents=matches.map(match=>
-                                                                match.replace(/'/g, '').trim()); %>
-                                                                <% const filteredComponents=addressComponents.slice(0,
-                                                                    -1); %>
-                                                                    <% const addressWithoutId=filteredComponents.join(', '); %>
+                                                <span class="badge bg-success rounded-pill">
+                                                    <%= order.paymentMethod %>
+                                                </span>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <h3 class="h6">🏠Billing address</h3>
+                                                <address>
+                                                    <strong>
+                                                        <%= order.customer.name %>
+                                                    </strong><br>
+                                                    <!-- 🏠<%= order.orderAddress %> -->
+                                                    <% const orderAddressString=order.orderAddress; %>
+                                                        <% if (orderAddressString) { %>
+                                                            <% const matches=orderAddressString.match(/'([^']+)'/g); %>
+                                                                <% if (matches) { %>
+                                                                    <% const addressComponents=matches.map(match=>
+                                                                        match.replace(/'/g, '').trim()); %>
+                                                                        <% const
+                                                                            filteredComponents=addressComponents.slice(0,
+                                                                            -1); %>
+                                                                            <% const
+                                                                                addressWithoutId=filteredComponents.join(', '); %>
                                                 <p><%= addressWithoutId %></p>
                                             <% } else { %>
                                                 <p>No address available</p>
@@ -290,17 +256,20 @@
         </div>
 
     </main>
-    <footer>
+    <footer style="width: 100%;">
         <!-- place footer here -->
-    </footer>
+        <%- include("../layouts/footer.ejs") %>
+     </footer>
     <!-- Bootstrap JavaScript Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
+     <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+     crossorigin="anonymous"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+     <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"></script>
+     crossorigin="anonymous"></script>
 </body>
 
 </html>
